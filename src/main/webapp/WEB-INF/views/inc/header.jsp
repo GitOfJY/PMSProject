@@ -187,7 +187,7 @@
 						<div class="dropdown-divider"></div>
 
 
-						<a class="dropdown-item" href="/web/login/logout.do"> <i
+						<a class="dropdown-item" href="/web/logout"> <i
 							class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
 							Logout
 						</a>
