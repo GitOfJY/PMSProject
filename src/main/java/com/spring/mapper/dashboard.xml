@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dashboardall">
+
+	<select id="tnamelist" resultType="dashboarddto">
+		select distinct tname from viewDashProjectCost
+	</select>
+	
+	<!-- 
+	비용  sql 
+	select 
+	    t.name,
+	    cd.costdiv,
+	    b.infancy
+	from tblcost c
+    inner join tblbudget b on c.budgetseq = b.budgetseq
+    inner join tblproject p on b.projectseq = p.projectseq
+    inner join tblteam t on t.projectseq = p.projectseq
+    inner join tblcostdivision cd on cd.costdivisionseq = c.costdivisionseq
+    group by t.name, cd.costdiv, b.infancy
+    order by t.name
+	-->
+
+	
+	<select id="projectlist" resultType="dashboarddto">
+		select 
+		    p.name as projectname, p.startdate as pstartdate, p.finishdate as pfinishdate,
+		    p.pcode as pcode, e.name as pl, t.name as team, vi.issucnt as issuecnt,
+		    vo.outputcnt as outputcnt, ps.state as pstate, rnd.state as rnd, p.projectseq as projectseq
+		from tblteam t
+    		inner join tblEmployee e on t.employeeseq = e.employeeseq
+    		inner join tblProject p on p.projectseq = t.projectseq
+    		inner join tblrnd rnd on rnd.rndseq = p.rndseq
+    		inner join tblrole r on r.roleseq = t.roleseq
+    		inner join tblpState ps on ps.pstateseq = p.pstateseq
+    		left outer join vdashissue vi on t.name = vi.name
+    		left outer join vdashoutput vo on t.name = vo.name
+    		where r.role='PL'
+	</select>
+	
+	<select id="donutchart" resultType="dashboarddto">
+		select s.state as state, count(s.state) as scount from tblissue i
+					inner join tblistate s on i.istateseq = s.istateseq group by s.state
+	</select>
+	
+	<select id="barchart" resultType="dashboarddto">
+		select TO_CHAR(to_date(pstartdate), 'yyyy/mm') as pdate, projectstate, count(projectstate) as count 
+			from viewdp group by TO_CHAR(to_date(pstartdate), 'yyyy/mm'), projectstate
+	</select>
+	
+	
+	
+</mapper>

@@ -4,18 +4,23 @@
 
 <tiles-definitions>
 
-	<!-- 이름, jsp 경로 설정 -->
-	<definition name="test" template="/WEB-INF/views/layout/output.jsp">
+
+	<!-- login -->
+	<definition name="login" template="/WEB-INF/views/layout/login.jsp">
 		<put-attribute name="asset" value="/WEB-INF/views/inc/asset.jsp"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/login/login.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="*" template="/WEB-INF/views/layout/login.jsp">
+	<!-- dashboard -->
+	<definition name="*" template="/WEB-INF/views/layout/dashboardall.jsp">
 		<put-attribute name="asset" value="/WEB-INF/views/inc/asset.jsp"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"></put-attribute>
-		<put-attribute name="content" value="/WEB-INF/views/login/{1}.jsp"></put-attribute>
+		<put-attribute name="projectchart" value="/WEB-INF/views/inc/projectchart.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/dashboard/{1}.jsp"></put-attribute>
 	</definition>
+	
 	
 </tiles-definitions>

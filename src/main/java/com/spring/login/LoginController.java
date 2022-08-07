@@ -9,9 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 
 
 @Controller
@@ -26,7 +23,7 @@ public class LoginController {
 	
 	
 	@GetMapping(value="/login")
-	public String login(HttpServletRequest request, Model model) {
+	public String login(HttpServletRequest request) {
 		return "login";
 	}
 	
@@ -43,7 +40,7 @@ public class LoginController {
 			if (result != null) {
 				//로그인 성공
 				session.setAttribute("result", result);
-				resp.sendRedirect("/web/test");
+				resp.sendRedirect("/web/dashboardall");
 			} else {
 				//로그인 실패
 				session.removeAttribute("result");
@@ -54,7 +51,6 @@ public class LoginController {
 			e.printStackTrace();
 		}
 	}
-	
 	
 	@GetMapping(value="/logout")
 	public String logout(HttpSession session, HttpServletRequest req) {

@@ -7,6 +7,5 @@
 	<select id="login" parameterType="com.spring.login.LoginDTO" resultType="com.spring.login.LoginDTO">
 		select * from tblEmployee where email = #{email} and pw = #{pw}
 	</select>
-	
     	
 </mapper>
