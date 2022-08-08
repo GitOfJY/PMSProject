@@ -15,6 +15,7 @@
 
 <title>SY SoftWare</title>
 <tiles:insertAttribute name="asset"/>
+<tiles:insertAttribute name="projectasset"/>
 
 </head>
 

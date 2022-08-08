@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="issue">
+	<select id="issuelist" resultType="idto">
+		SELECT
+		issueSeq AS ISSUESEQ
+		, title AS TITLE
+		, workSeq AS WORKSEQ
+		, workName AS WORKNAME
+		, projectSeq AS PROJECTSEQ
+		, projectName AS PROJECTNAME
+		, TO_CHAR(regDate, 'YYYY-MM-DD') AS REGDATE
+		, TO_CHAR(hopeDate, 'YYYY-MM-DD') AS HOPEDATE
+		, TO_CHAR(manageDate, 'YYYY-MM-DD') AS MANAGEDATE
+		, content AS CONTENT
+		, imergency AS IMERGENCY
+		, iType AS ITYPE
+		, iStateSeq AS ISTATESEQ
+		, IRoleSeq AS IROLESEQ
+		FROM TBLISSUE
+		WHERE 1 = 1
+	</select>
+
+</mapper>

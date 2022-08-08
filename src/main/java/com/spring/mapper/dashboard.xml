@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dashboardall">
+
+	
+	<select id="plist" resultType="dashboarddto">
+		select 
+		    cntname,
+		    (select cnt from vwDashProject where cntpstate = '시작전' and cntname = v.cntname) as "before",
+		    (select cnt from vwDashProject where cntpstate = '진행중' and cntname = v.cntname) as "ing",
+		    (select cnt from vwDashProject where cntpstate = '완료' and cntname = v.cntname) as "done",
+		    (select cnt from vwDashProject where cntpstate = '홀드' and cntname = v.cntname) as "hold",
+		    (select cnt from vwDashProject where cntpstate = '진행중단' and cntname = v.cntname) as "stop"
+		from vwDashProject v group by cntname order by cntname
+	</select>
+	
+
+	<select id="costlist" resultType="dashboarddto">
+		select 
+    		tname,
+    		(select distinct cost from viewDashProjectCost where costdiv = '서버유지' and tname = v.tname) as "server",
+    		(select distinct cost from viewDashProjectCost where costdiv = '개발툴' and tname = v.tname) as "tool",
+    		(select distinct cost from viewDashProjectCost where costdiv = '기타' and tname = v.tname) as "etc"
+		from viewDashProjectCost v group by tname  order by tname
+	</select>
+	
+	
+	<select id="projectlist" resultType="dashboarddto">
+		select 
+		    p.name as projectname, p.startdate as pstartdate, p.finishdate as pfinishdate,
+		    p.pcode as pcode, e.name as pl, t.name as team, vi.issucnt as issuecnt,
+		    vo.outputcnt as outputcnt, ps.state as pstate, rnd.state as rnd, p.projectseq as projectseq
+		from tblteam t
+    		inner join tblEmployee e on t.employeeseq = e.employeeseq
+    		inner join tblProject p on p.projectseq = t.projectseq
+    		inner join tblrnd rnd on rnd.rndseq = p.rndseq
+    		inner join tblrole r on r.roleseq = t.roleseq
+    		inner join tblpState ps on ps.pstateseq = p.pstateseq
+    		left outer join vdashissue vi on t.name = vi.name
+    		left outer join vdashoutput vo on t.name = vo.name
+    		where r.role='PL'
+	</select>
+	
+	
+	<select id="donutchart" resultType="dashboarddto">
+		select s.state as state, count(s.state) as scount from tblissue i
+					inner join tblistate s on i.istateseq = s.istateseq group by s.state
+	</select>
+	
+	
+	<select id="barchart" resultType="dashboarddto">
+		select TO_CHAR(to_date(pstartdate), 'yyyy/mm') as pdate, projectstate, count(projectstate) as count 
+			from viewdp group by TO_CHAR(to_date(pstartdate), 'yyyy/mm'), projectstate
+	</select>
+	
+	
+</mapper>

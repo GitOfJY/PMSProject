@@ -3,12 +3,36 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<!-- 이름, jsp 경로 설정 -->
-	<definition name="test" template="/WEB-INF/views/layout/output.jsp">
+
+
+	<definition name="login" template="/WEB-INF/views/layout/login.jsp">
 		<put-attribute name="asset" value="/WEB-INF/views/inc/asset.jsp"></put-attribute>
 		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/login/login.jsp"></put-attribute>
 	</definition>
 	
+	<definition name="dashboard.*" template="/WEB-INF/views/layout/dashboardall.jsp">
+		<put-attribute name="asset" value="/WEB-INF/views/inc/asset.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"></put-attribute>
+		<put-attribute name="projectchart" value="/WEB-INF/views/inc/projectchart.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/dashboard/{1}.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="*.*" template="/WEB-INF/views/layout/output.jsp">
+		<put-attribute name="asset" value="/WEB-INF/views/inc/asset.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="wbs.project.centerwbs" template="/WEB-INF/views/layout/project.jsp">
+		<put-attribute name="asset" value="/WEB-INF/views/inc/asset.jsp"></put-attribute>
+		<put-attribute name="projectasset" value="/WEB-INF/views/inc/projectasset.jsp"></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/views/inc/header.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/project/centerwbs.jsp"></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/views/inc/footer.jsp"></put-attribute>
+	</definition>	
 	
 </tiles-definitions>

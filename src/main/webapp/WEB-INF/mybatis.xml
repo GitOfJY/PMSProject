@@ -6,6 +6,9 @@
 
 	<typeAliases>
 		<typeAlias type="com.spring.project.OutputDTO" alias="dto"/>
+		<typeAlias type="com.spring.dashboard.DashboardDTO" alias="dashboarddto"/>
+		<typeAlias type="com.spring.project.ProjectDTO" alias="pdto"/>
+		<typeAlias type="com.spring.issue.IssueDTO" alias="idto"/>	
 	</typeAliases>
    
 </configuration>
