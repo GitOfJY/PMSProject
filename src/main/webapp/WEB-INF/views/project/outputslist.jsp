@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var form = document.getElementById("outputForm");
+
+		$("#search").click(function() {
+			form.action = "/web/project/outputssearch";
+			form.method = "GET";
+			form.submit();
+		});
+	});
+</script>
 <div class="container-fluid">
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
@@ -8,23 +21,17 @@
 		<div class="card-body">
 			<div class="d-sm-flex align-items-center justify-content-between mb-4">
 
-					<!-- 검색 -->
-					<table class="search">
-						<tr>
-							<td>
-								<input type="text" name="searchfile" class="form-control bg-light border-0 small" id="fileName" placeholder="파일명으로 검색..." aria-label="Search" aria-describedby="basic-addon2">
-							</td>
-							<td>
-								<button class="btn btn-primary" onclick="search();">
-									<i class="fas fa-search fa-sm"></i>
-								</button>
-
-								<c:if test="${map.isSearch == 'y'}">
-									<button class="btn btn-secondary" type="button" onclick="location.href='/web/project/outputslist';">중단하기</button>
-								</c:if>
-							</td>
-						</tr>
-					</table>
+				<!-- 검색 -->
+				<form id="outputForm" class="form-inline">
+					<div class="form-group">
+						<input type="text" name="title" id=title class="form-control bg-light border-0 small" placeholder="파일명으로 검색..." aria-label="Search" aria-describedby="basic-addon2">
+					</div>
+					<div class="form-group">
+						<button id="search" class="btn btn-primary">
+							<i class="fas fa-search fa-sm"></i>
+						</button>
+					</div>
+				</form>
 
 				<a href="outputadd" class="btn btn-primary btn-icon-split">
 					<span class="icon text-white-50"> <i class="fa fa-plus" aria-hidden="true"></i>
@@ -44,7 +51,7 @@
 						<c:forEach items="${alist}" var="dto">
 							<tr>
 								<td>
-									<a href="/web/project/outputinfo?fileseq=${dto.fileseq}" style="font-weight:bold;">${dto.title}</a> 
+									<a href="/web/project/outputinfo?fileseq=${dto.fileseq}" style="font-weight: bold;">${dto.title}</a>
 									<br /> ${dto.regdate}
 								</td>
 								<td>
@@ -53,9 +60,9 @@
 								</td>
 								<td style="text-align: right;">
 									<!-- 파일 버전 -->
-									<button onclick="#!" class="btn btn-secondary btn-sm" title="파일 버전보기">
+									<!-- <button onclick="#!" class="btn btn-secondary btn-sm" title="파일 버전보기">
 										<i class="fa fa-sort-numeric-down"></i>버전
-									</button>
+									</button> -->
 									<!-- 파일 상세보기 -->
 									<button onclick="location.href='/web/project/outputinfo?fileseq=${dto.fileseq}';" class="btn btn-secondary btn-sm" title="파일 상세보기">
 										<i class="fa fa-search"></i>

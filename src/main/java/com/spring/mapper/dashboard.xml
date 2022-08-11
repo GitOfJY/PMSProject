@@ -13,7 +13,9 @@
 		    (select cnt from vwDashProject where cntpstate = '완료' and cntname = v.cntname) as "done",
 		    (select cnt from vwDashProject where cntpstate = '홀드' and cntname = v.cntname) as "hold",
 		    (select cnt from vwDashProject where cntpstate = '진행중단' and cntname = v.cntname) as "stop"
-		from vwDashProject v group by cntname order by cntname
+		from vwDashProject v 
+			group by cntname 
+			order by cntname
 	</select>
 	
 
@@ -23,15 +25,25 @@
     		(select distinct cost from viewDashProjectCost where costdiv = '서버유지' and tname = v.tname) as "server",
     		(select distinct cost from viewDashProjectCost where costdiv = '개발툴' and tname = v.tname) as "tool",
     		(select distinct cost from viewDashProjectCost where costdiv = '기타' and tname = v.tname) as "etc"
-		from viewDashProjectCost v group by tname  order by tname
+		from viewDashProjectCost v 
+			group by tname 
+			order by tname
 	</select>
 	
 	
 	<select id="projectlist" resultType="dashboarddto">
 		select 
-		    p.name as projectname, p.startdate as pstartdate, p.finishdate as pfinishdate,
-		    p.pcode as pcode, e.name as pl, t.name as team, vi.issucnt as issuecnt,
-		    vo.outputcnt as outputcnt, ps.state as pstate, rnd.state as rnd, p.projectseq as projectseq
+		    p.name as "projectname", 
+		    p.startdate as "pstartdate", 
+		    p.finishdate as "pfinishdate",
+		    p.pcode as "pcode", 
+		    e.name as "pl", 
+		    t.name as "team", 
+		    vi.issucnt as "issuecnt",
+		    vo.outputcnt as "outputcnt", 
+		    ps.state as "pstate", 
+		    rnd.state as "rnd", 
+		    p.projectseq as "projectseq"
 		from tblteam t
     		inner join tblEmployee e on t.employeeseq = e.employeeseq
     		inner join tblProject p on p.projectseq = t.projectseq
@@ -45,15 +57,174 @@
 	
 	
 	<select id="donutchart" resultType="dashboarddto">
-		select s.state as state, count(s.state) as scount from tblissue i
-					inner join tblistate s on i.istateseq = s.istateseq group by s.state
+		select 
+			s.state as "state", 
+			count(s.state) as "scount" 
+		from tblissue i
+			inner join tblistate s on i.istateseq = s.istateseq 
+			group by s.state
 	</select>
 	
 	
 	<select id="barchart" resultType="dashboarddto">
-		select TO_CHAR(to_date(pstartdate), 'yyyy/mm') as pdate, projectstate, count(projectstate) as count 
-			from viewdp group by TO_CHAR(to_date(pstartdate), 'yyyy/mm'), projectstate
+		select 
+			TO_CHAR(to_date(pstartdate), 'yyyy/mm') as "pdate", 
+			projectstate, 
+			count(projectstate) as count 
+		from viewdp 
+			group by TO_CHAR(to_date(pstartdate), 'yyyy/mm'), projectstate
 	</select>
 	
+	
+	<select id="ptlist" resultType="dashboarddto" parameterType="String">
+		select 
+		    cntname,
+		    (select cnt from vwDashProject where cntpstate = '시작전' and cntname = v.cntname) as "before",
+		    (select cnt from vwDashProject where cntpstate = '진행중' and cntname = v.cntname) as "ing",
+		    (select cnt from vwDashProject where cntpstate = '완료' and cntname = v.cntname) as "done",
+		    (select cnt from vwDashProject where cntpstate = '홀드' and cntname = v.cntname) as "hold",
+		    (select cnt from vwDashProject where cntpstate = '진행중단' and cntname = v.cntname) as "stop"
+		from vwDashProject v where cntname = #{cntname}
+	</select>
+	
+	
+	<select id="ctlist" resultType="dashboarddto" parameterType="String">
+		select 
+    		tname,
+    		(select distinct cost from viewDashProjectCost where costdiv = '서버유지' and tname = v.tname) as "server",
+    		(select distinct cost from viewDashProjectCost where costdiv = '개발툴' and tname = v.tname) as "tool",
+    		(select distinct cost from viewDashProjectCost where costdiv = '기타' and tname = v.tname) as "etc"
+		from viewDashProjectCost v 
+			where tname = #{cntname} 
+			group by tname 
+	</select>
+	
+	<select id="pttlist" resultType="dashboarddto" parameterType="String">
+		select 
+		    p.name as "projectname", 
+		    p.startdate as "pstartdate", 
+		    p.finishdate as "pfinishdate",
+		    p.pcode as "pcode", 
+		    e.name as "pl", 
+		    t.name as "team", 
+		    vi.issucnt as "issuecnt",
+		    vo.outputcnt as "outputcnt", 
+		    ps.state as "pstate", 
+		    rnd.state as "rnd", 
+		    p.projectseq as "projectseq"
+		from tblteam t
+    		inner join tblEmployee e on t.employeeseq = e.employeeseq
+    		inner join tblProject p on p.projectseq = t.projectseq
+    		inner join tblrnd rnd on rnd.rndseq = p.rndseq
+    		inner join tblrole r on r.roleseq = t.roleseq
+    		inner join tblpState ps on ps.pstateseq = p.pstateseq
+    		left outer join vdashissue vi on t.name = vi.name
+    		left outer join vdashoutput vo on t.name = vo.name
+    		where r.role='PL' and t.name = #{cntname}
+	</select>
+	
+	<select id="mywork" resultType="dashboardepdto" parameterType="String">
+		select
+		    count(w.name) as "wcount"
+		from tblwork w
+		    inner join tblteam t on w.teamseq = t.teamseq
+		    right outer join tblemployee e on t.employeeseq = e.employeeseq
+		    where e.employeeseq = #{employeeseq}
+		    group by e.employeeseq
+	</select>
+	
+	<select id="myissue" resultType="dashboardepdto" parameterType="String">
+		select
+			count(w.name) as "icount" 
+		from tblissue i
+		    inner join tblwork w on w.workseq = i.workseq
+		    right outer join tblteam t on t.teamseq = w.teamseq
+		    right outer join tblemployee e on t.employeeseq = e.employeeseq
+		    where e.employeeseq = #{employeeseq}
+		    group by e.employeeseq
+	</select>
+	
+	<select id="myoutput" resultType="dashboardepdto" parameterType="String">
+		select 
+			count(w.name) as "opcount" 
+		from tbloutput op
+		    left outer join tblwork w on op.workseq = w.workseq
+		    right outer join tblteam t on t.teamseq = w.teamseq
+		    right outer join tblemployee e on t.employeeseq = e.employeeseq
+		    where e.employeeseq = #{employeeseq}
+		    group by e.employeeseq
+	</select>
+	
+	<select id="myproject" resultType="dashboardepdto" parameterType="String">
+		select 
+			count(p.name) as "pcount"
+		from tblproject p
+		    inner join tblteam t on t.projectseq = p.projectseq
+		    right outer join tblemployee e on t.employeeseq = e.employeeseq
+		    where e.employeeseq = #{employeeseq}
+		    group by e.employeeseq
+	</select>
+	
+	<select id="eachplist" resultType="dashboardepdto" parameterType="String">
+		select 
+		        p.name as "eachpname",
+   				p.projectseq as "eachpseq"
+		from tblemployee e 
+		    left outer join tblteam t on e.employeeseq = t.employeeseq
+		    left outer join tblproject p on p.projectseq = t.projectseq
+		    where e.employeeseq = #{employeeseq}   
+	</select>
+	
+	<select id="eachwlist" resultType="dashboardepdto" parameterType="String">
+		select 
+		    w.name as "wname",
+		    w.startdate as "wsdate",
+		    w.finishdate as "wfdate",
+		    p.name as "pname"
+		from tblwork w 
+		    inner join tblteam t on w.teamseq = t.teamseq
+		    inner join tblemployee e on e.employeeseq = t.employeeseq
+		    inner join tblproject p on p.projectseq = t.projectseq
+		    where e.employeeseq = #{employeeseq}   
+	</select>
+	
+	<select id="eachoplist" resultType="dashboardepdto" parameterType="String">
+		select 
+		    p.name as "oppname",
+		    w.name as "opwname",
+		    op.regdate as "date",
+		    op.fileexplain as "opname"
+		from tbloutput op
+		    inner join tblwork w on w.workseq = op.workseq
+		    inner join tblteam t on t.teamseq = w.teamseq
+		    inner join tblproject p on p.projectseq = t.projectseq
+		    inner join tblemployee e on e.employeeseq = t.employeeseq
+		    where e.employeeseq = #{employeeseq} 
+	</select>
+	
+	<select id="ewchart" resultType="dashboardepdto" parameterType="String">
+		select
+		    e.employeeseq as ewemployeeseq,
+		    ws.state as ewstate,
+		    count(ws.state) as ewcnt
+		from tblemployee e
+		    left outer join tblteam t on e.employeeseq = t.employeeseq
+		    left outer join tblwork w on w.teamseq = t.teamseq
+		    left outer join tblwstate ws on ws.wstateseq = w.wstateseq
+		    where e.employeeseq = #{employeeseq} 
+		    group by e.employeeseq, ws.state
+	</select>
+	
+	<select id="iwchart" resultType="dashboardepdto" parameterType="String">
+		select
+		    e.employeeseq as iemployeeseq,
+		    ist.state as istate,
+		    count(ist.state) as icnt
+		from tblemployee e 
+		    left outer join tblissue i on e.employeeseq = i.employeeseq
+		    left outer join tblistate ist on i.istateseq = ist.istateseq
+		     where e.employeeseq = #{employeeseq} 
+		    group by e.employeeseq, ist.state
+	</select>
 	
 </mapper>

@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var form = document.getElementById("issueForm");
+
+		$("#search").click(function() {
+			form.action = "/web/project/issuesearch";
+			form.method = "GET";
+			form.submit();
+		});
+
+	});
+</script>
 <style>
 .tap {
 	border: 1px solid #E0E0E0;
@@ -122,10 +136,34 @@ hr {
 						</tr>
 					</table>
 				</div>
-				<div class="kt-portlet__head-label" style="margin-left: 30px;">
-					<h4 class="kt-portlet__head-title">프로젝트 이슈</h4>
+
+				<!-- 검색 -->
+				<div class="d-sm-flex align-items-center justify-content-between mb-4">
+					<form id="issueForm" class="form-inline">
+						<div class="form-group">
+							<b style="margin-right: 3px">긴급여부</b>
+							<select id="imergency" name="imergency" style="margin-right: 8px">
+								<option value="">전체</option>
+								<option value="y">긴급</option>
+								<option value="n">일반</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<input id="title" name="title" type="text" class="form-control bg-light border-0 small" placeholder="이슈제목으로 검색..." aria-label="Search" aria-describedby="basic-addon2">
+						</div>
+						<div class="form-group">
+							<button id="search" class="btn btn-primary">
+								<i class="fas fa-search fa-sm"></i>
+							</button>
+						</div>
+						<input type="hidden" name="projectseq" value="${seq.projectseq}" />
+					</form>
+
+					<a href="/web/issue/issueadd" class="btn btn-primary btn-icon-split">
+						<span class="icon text-white-50"> <i class="fa fa-plus" aria-hidden="true"></i>
+						</span> <span class="text">이슈 등록</span>
+					</a>
 				</div>
-				<hr>
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 						<thead class="text-center">
@@ -133,10 +171,11 @@ hr {
 								<!-- 헤더 -->
 								<th>긴급여부</th>
 								<th>이슈제목</th>
-								<th>이슈구분</th>
+								<th>프로젝트 명</th>
+								<th>구분</th>
 								<th>등록일자</th>
 								<th>조치희망일</th>
-								<th>처리완료일자</th>
+								<th>조치완료일</th>
 							</tr>
 						</thead>
 						<c:if test="${fn:length(issue) == 0}">
@@ -161,6 +200,7 @@ hr {
 										<td>
 											<a href="/web/issue/issueedit?issueseq=${list.issueseq}">${list.title}</a>
 										</td>
+										<td>${list.projectname}</td>
 										<td>${list.itype}</td>
 										<td>${list.regdate}</td>
 										<td>${list.hopedate}</td>

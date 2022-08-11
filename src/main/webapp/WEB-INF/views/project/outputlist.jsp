@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var form = document.getElementById("outputForm");
+
+		$("#search").click(function() {
+			form.action = "/web/project/outputsearch";
+			form.method = "GET";
+			form.submit();
+		});
+	});
+</script>
 <style>
 .tap {
 	border: 1px solid #E0E0E0;
@@ -123,20 +136,21 @@ hr {
 				</div>
 
 				<div class="d-sm-flex align-items-center justify-content-between mb-4">
-					<!-- Topbar Search -->
-					<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-						<div class="input-group">
-							<input type="text" class="form-control bg-light border-0 small" placeholder="파일명으로 검색..." aria-label="Search" aria-describedby="basic-addon2">
-							<div class="input-group-append">
-								<button class="btn btn-primary" type="button">
-									<i class="fas fa-search fa-sm"></i>
-								</button>
-							</div>
+					<!-- 검색 -->
+					<form id="outputForm" class="form-inline">
+						<div class="form-group">
+							<input type="text" name="title" id=title class="form-control bg-light border-0 small" placeholder="파일명으로 검색..." aria-label="Search" aria-describedby="basic-addon2">
 						</div>
+						<div class="form-group">
+							<button id="search" class="btn btn-primary">
+								<i class="fas fa-search fa-sm"></i>
+							</button>
+						</div>
+						<input type="hidden" name="projectseq" value="${seq.projectseq}" />
 					</form>
 
 					<!-- 산출물 등록 버튼 -->
-					<a href="outputadd.do" class="btn btn-primary btn-icon-split">
+					<a href="outputadd" class="btn btn-primary btn-icon-split">
 						<span class="icon text-white-50"> <i class="fa fa-plus" aria-hidden="true"></i>
 						</span> <span class="text">산출물 등록</span>
 					</a>
@@ -167,9 +181,9 @@ hr {
 										<td style="text-align: right;">
 
 											<!-- 파일 버전 -->
-											<button onclick="#!" class="btn btn-secondary btn-sm" title="파일 버전보기">
+											<!-- <button onclick="#!" class="btn btn-secondary btn-sm" title="파일 버전보기">
 												<i class="fa fa-sort-numeric-down"></i>버전
-											</button>
+											</button> -->
 											<!-- 파일 상세보기 -->
 											<button onclick="location.href='/web/project/outputinfo?fileseq=${dto.fileseq}';" class="btn btn-secondary btn-sm" title="파일 상세보기">
 												<i class="fa fa-search"></i>

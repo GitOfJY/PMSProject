@@ -11,7 +11,7 @@
 					<div class="container">
 
 						<!-- <form id="contact-form" role="form"> -->
-						<form name="fileForm" method="POST" action="/web/project/outputaddok" enctype="multipart/form-data">
+						<form name ="fileForm" method="POST" action="/web/project/outputaddok" enctype="multipart/form-data">
 							<div class="controls">
 								<div class="row">
 									<div class="col">

@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class IssueStateDTO {
 	
-	private String iStateSeq;
+	private String istateseq;
 	private String state;
 
 }

@@ -106,10 +106,7 @@ tr {
 		</div>
 
 		<div class="col-lg-12 col-md-9 col-sm-12 col-xs-12">
-
 			<div class="k-widget k-grid pms-default-grid" id="grid">
-
-
 				<table>
 					<colgroup>
 						<col style="width: 70px" />
@@ -125,7 +122,7 @@ tr {
 					<thead class="k-grid-header">
 						<tr>
 							<th scope="col"><span class="k-link">순번</span></th>
-							<th scope="col"><span class="k-link">프로젝트</span></th>
+							<th scope="col"><span class="k-link">프로젝트 명</span></th>
 							<th scope="col"><span class="k-link">프로젝트 코드</span></th>
 							<th scope="col"><span class="k-link">프로젝트 유형</span></th>
 							<th scope="col"><span class="k-link">시작일</span></th>

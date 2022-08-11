@@ -40,4 +40,64 @@ public class DashboardDAOImpl implements DashboardDAO {
 		return template.selectList("dashboardall.barchart");
 	}
 
+	@Override
+	public List<DashboardDTO> ptlist(String cntname) {
+		return template.selectList("dashboardall.ptlist", cntname);
+	}
+
+	@Override
+	public List<DashboardDTO> ctlist(String cntname) {
+		return template.selectList("dashboardall.ctlist", cntname);
+	}
+
+	@Override
+	public List<DashboardDTO> pttlist(String cntname) {
+		return template.selectList("dashboardall.pttlist", cntname);
+	}
+
+	@Override
+	public DashboardEPDTO mywork(String employeeseq) {
+		return template.selectOne("dashboardall.mywork", employeeseq);
+	}
+
+	@Override
+	public DashboardEPDTO myissue(String employeeseq) {
+		return template.selectOne("dashboardall.myissue", employeeseq);
+	}
+
+	@Override
+	public DashboardEPDTO myoutput(String employeeseq) {
+		return template.selectOne("dashboardall.myoutput", employeeseq);
+	}
+
+	@Override
+	public DashboardEPDTO myproject(String employeeseq) {
+		return template.selectOne("dashboardall.myproject", employeeseq);
+	}
+
+	@Override
+	public List<DashboardEPDTO> eachplist(String employeeseq) {
+		return template.selectList("dashboardall.eachplist", employeeseq);
+	}
+
+	@Override
+	public List<DashboardEPDTO> eachwlist(String employeeseq) {
+		return template.selectList("dashboardall.eachwlist", employeeseq);
+	}
+
+	@Override
+	public List<DashboardEPDTO> eachoplist(String employeeseq) {
+		return template.selectList("dashboardall.eachoplist", employeeseq);
+	}
+
+	@Override
+	public List<DashboardDTO> ewchart(String employeeseq) {
+		return template.selectList("dashboardall.ewchart", employeeseq);
+	}
+
+	@Override
+	public List<DashboardDTO> iwchart(String employeeseq) {
+		return template.selectList("dashboardall.iwchart", employeeseq);
+	}
+	
 }

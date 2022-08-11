@@ -42,6 +42,5 @@ public class DashboardDTO {
 		private String pdate;
 		private String count;
 		
-	
 
 }

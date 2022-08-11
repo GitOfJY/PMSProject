@@ -22,13 +22,14 @@
             </td>
                 <td>
                     <div class="card shadow mb-4">         
-                       	<div class="card-body">
-                       		<c:forEach items="${result}" var="dto">
+                       	<div class="card-body" style="height:396px;">
+                       		
                            	<nav class="navbar navbar-expand navbar-light bg-light mb-4">
-                               	<a class="navbar-brand">${dto}</a>
+                               	<a class="navbar-brand">${sessionScope.result.ename}</a>
                             </nav>
-                                <p class="mb-0 small">아이디(직급)</p>
-                            </c:forEach>  
+                                <p class="mb-0 large">${sessionScope.result.email}(${sessionScope.result.position})</p>
+                           		<p class="mb-0 large">소속팀 : ${not empty sessionScope.result.tname ? sessionScope.result.tname : "없음" } (${not empty sessionScope.result.role ? sessionScope.result.role : "없음" })</p>
+                           		<p class="mb-0 large">프로젝트 : ${not empty sessionScope.result.pjsdate ? sessionScope.result.pjsdate.substring(0,10) : "00"} ~ ${not empty sessionScope.result.pjfdate ? sessionScope.result.pjfdate.substring(0,10) : "00"} ( ${sessionScope.result.pname}  / ${not empty sessionScope.result.pstate ? sessionScope.result.pstate : "없음"} )</p>
                         </div>
                     </div>
                 </td>

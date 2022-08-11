@@ -7,13 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class IssueServiceImpl implements IssueService{
+public class IssueServiceImpl implements IssueService {
 
 	@Autowired
 	private IssueDAO dao;
+
+	@Override
+	public List<IssueDTO> issuelist(String employeeseq) {
+		return dao.issuelist(employeeseq);
+	}
+
+	@Override
+	public IssueDTO editlist(String issueseq) {
+		return dao.editlist(issueseq);
+	}
+
+	@Override
+	public List<Map<String, String>> resultlist(Map<String, Object> param) {
+		return dao.resultlist(param);
+	}
+
+	@Override
+	public List<IssueProjectDTO> issueproject(String employeeseq) {
+		return dao.issueproject(employeeseq);
+	}
 	
 	@Override
-	public List<IssueDTO> issuelist() {
-		return dao.issuelist();
+	public List<IssueWorkDTO> issuework(String employeeseq) {
+		return dao.issuework(employeeseq);
+	}
+	
+	@Override
+	public int add(IssueDTO dto) {
+		return dao.add(dto);
 	}
 }

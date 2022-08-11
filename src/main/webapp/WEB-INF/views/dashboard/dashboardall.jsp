@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <!-- dashboardall.jsp -->
 	<div>대시보드</div>
 	<div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -11,19 +12,8 @@
 	
 	<div class="row">
 		<div class="card shadow mb-4" style="width:525px; margin:0 0px 0 13px;">
-        	<div class="card-header py-3" >
-        		 <nav class="navbar navbar-expand navbar-light bg-light mb-4" style="margin:0;">
-                 	<h6 class="m-0 font-weight-bold text-primary">프로젝트 수행지표</h6>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">연도</a>
-                            <div class="dropdown-menu dropdown-menu-right animated--grow-in" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">2022</a>
-                                <a class="dropdown-item" href="#">2023</a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>            	
+			<div class="card-header py-3">
+            	<h6 class="m-0 font-weight-bold text-primary">프로젝트 수행지표</h6>
             </div>
             <div class="card-body">
                	<div class="table-responsive">
@@ -39,16 +29,16 @@
 		                	</tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${plist}" var="dto">
-                        <tr>
-                        	<td>${dto.cntname}</td>
-                        	<td>${not empty dto.before ? dto.before : "0"}</td>
-                        	<td>${not empty dto.ing ? dto.ing : "0"}</td>
-                        	<td>${not empty dto.done ? dto.done : "0"}</td>
-                        	<td>${not empty dto.hold ? dto.hold : "0"}</td>
-                        	<td>${not empty dto.stop ? dto.stop : "0"}</td>
-		     			</tr>      	
-                        </c:forEach>              	
+	                        <c:forEach items="${plist}" var="dto">
+	                        <tr>
+	                        	<td>${dto.cntname}</td>
+	                        	<td>${not empty dto.before ? dto.before : "0"}</td>
+	                        	<td>${not empty dto.ing ? dto.ing : "0"}</td>
+	                        	<td>${not empty dto.done ? dto.done : "0"}</td>
+	                        	<td>${not empty dto.hold ? dto.hold : "0"}</td>
+	                        	<td>${not empty dto.stop ? dto.stop : "0"}</td>
+			     			</tr>      	
+	                        </c:forEach>              	
                         </tbody>
                     </table>
                  </div>
@@ -73,41 +63,42 @@
                         </thead>
                         <tbody>
                             <c:forEach items="${costlist}" var="dto">
-                        <tr>
+                       		<tr>
                         	<td>${dto.tname}</td>
                         	<td>${not empty dto.server ? dto.server : "0"}</td>
                         	<td>${not empty dto.tool ? dto.tool : "0"}</td>
                         	<td>${not empty dto.etc ? dto.etc : "0"}</td>
-		     			</tr>      	
-                        </c:forEach>          	         	
+		     				</tr>      	
+                        	</c:forEach>          	         	
                         </tbody>
                     </table>
                  </div>
             </div>
         </div>
-        </div>
+    </div>
 
-	 <div class="card shadow mb-4">
-        	<div class="card-header py-3">
-            	<h6 class="m-0 font-weight-bold text-primary">주요 프로젝트 현황</h6>
-            </div>
-            <div class="card-body">
-               	<div class="table-responsive">
-                   	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                       	<thead>
-               	            <tr>
-			            	<th>프로젝트 명</th>
-			            	<th>프로젝트 코드</th>
-			            	<th>프로젝트 유형</th>
+
+	<div class="card shadow mb-4">
+        <div class="card-header py-3">
+           	<h6 class="m-0 font-weight-bold text-primary">주요 프로젝트 현황</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+               	        <tr>
+				          	<th>프로젝트 명</th>
+				           	<th>프로젝트 코드</th>
+				           	<th>프로젝트 유형</th>
 			                <th>PL</th>
-			                <th>팀</th>
+				            <th>팀</th>
 			                <th>진행상태</th>
 			                <th>시작일</th>
 			                <th>완료일</th>
 			                <th>산출물</th>
 			                <th>이슈</th>
 			                <th>상세</th>
-		                </tr>
+	                	</tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${projectlist}" var="dto">
@@ -118,13 +109,13 @@
                         	<td>${dto.pl}</td>
                         	<td>${dto.team}</td>
                         	<td>${dto.pstate}</td>
-                        	<td>${dto.pfinishdate}</td>
-                        	<td>${dto.pstartdate}</td>
+                        	<td>${dto.pfinishdate.substring(0,10)}</td>
+                        	<td>${dto.pstartdate.substring(0,10)}</td>
 			                <td>${not empty dto.outputcnt ? dto.outputcnt : "0"}</td>
 			                <td>${not empty dto.issuecnt ? dto.issuecnt : "0"}</td>
 			                <td>
 			                	<a href="/web/project/assignment?projectseq=${dto.projectseq}">
-								<i class="fas fa-search fa-sm">
+								<span class="material-symbols-outlined">search</span>
 								</a>
 							</td>
 		     			</tr>      	
@@ -134,17 +125,16 @@
             </div>
         </div>
     </div>
+    
 
 	<div class="row">
 	
 		<!-- Donut Chart -->
 	    <div class="col-xl-4 col-lg-5">
 			<div class="card shadow mb-4">
-				<!-- Card Header - Dropdown -->
 				<div class="card-header py-3">
 					<h6 class="m-0 font-weight-bold text-primary">이슈현황</h6>
 				</div>
-	            <!-- Card Body -->
 	            <div class="card-body" style="height:456px;">
 	              	<div id="chart1"></div>
 	            </div>
@@ -166,7 +156,6 @@
 	            </div>
 	        </div>
 	    </div>
-
     </div>       
         
         
@@ -196,6 +185,7 @@
 	        [{
 	           name: '',
 	           colorByPoint: true,
+	           colors: ['#ffa07a', '#ddcff4', '#ffe5f0'],
 	           data: 
 	          [<c:forEach items="${donutchart}" var="dto">
               {name: '${dto.state}',y: ${dto.scount}},
@@ -260,14 +250,7 @@
 		  }]
 		});
 	
-	//DashboardDTO(tname=null, projectstate=완료, pdate=2021/01, count=1), 
-	//DashboardDTO(tname=null, projectstate=진행중, pdate=2022/02, count=1), 
-	//DashboardDTO(tname=null, projectstate=시작전, pdate=2023/03, count=1)]
-
-	
 	</script>
-	
 
-	
 	
 	

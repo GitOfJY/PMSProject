@@ -1,6 +1,7 @@
 package com.spring.project;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OutputDAO {
 
@@ -19,5 +20,15 @@ public interface OutputDAO {
 	int del(String outputseq);
 
 	OutputDTO seq(String projectseq);
+
+	int edit(OutputDTO odto);
+
+	List<Map<String, String>> resultalist(Map<String, Object> param);
+
+	List<Map<String, String>> resultlist(Map<String, Object> param);
+
+	List<Map<String, String>> issueResultList(Map<String, Object> param);
+
+	int add(OutputDTO dto);
 
 }

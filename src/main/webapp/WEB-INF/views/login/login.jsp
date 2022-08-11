@@ -53,6 +53,12 @@
          <input type="hidden" name="pw" value="Aguistin12345">
          <input type="submit" value="신동민(사원)" class="btn btn-success">
       </form>
+       &nbsp;
+      <form method="POST" action="/web/loginok">
+         <input type="hidden" name="email" value="Jedediah@sysoft.com">
+         <input type="hidden" name="pw" value="Jedediah12345">
+         <input type="submit" value="이한별" class="btn btn-success">
+      </form>
    </div>
 
   

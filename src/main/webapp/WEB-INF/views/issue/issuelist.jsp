@@ -13,11 +13,6 @@
 			form.submit();
 		});
 
-		$("#addissue").click(function() {
-			form.action = "/web/issue/issueadd";
-			form.method = "GET";
-			form.submit();
-		});
 	});
 </script>
 <style>
@@ -56,39 +51,28 @@
 							<i class="fas fa-search fa-sm"></i>
 						</button>
 					</div>
-					<div class="form-group" style="position: absolute; right: 20px;">
-						<button id="addissue" class="btn btn-primary btn-icon-split">
-							<span class="icon text-white-50"> <i class="fa fa-plus" aria-hidden="true"></i></span> <span class="text">이슈등록</span>
-						</button>
-					</div>
 				</form>
 
+				<a href="issueadd" class="btn btn-primary btn-icon-split">
+					<span class="icon text-white-50"> <i class="fa fa-plus" aria-hidden="true"></i>
+					</span> <span class="text">이슈 등록</span>
+				</a>
 			</div>
 
 
 			<!-- 리스트 출력 -->
 			<!-- 조회 리스트 div -->
 			<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-				<%-- 검색결과 보고 고치기
-				<colgroup>
-					<col width="5%">
-					<col width="30%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-				</colgroup> --%>
 				<thead class="text-center">
 					<tr>
 						<!-- 헤더 -->
 						<th>긴급여부</th>
 						<th>이슈제목</th>
-						<th>프로젝트명</th>
-						<th>이슈구분</th>
+						<th>프로젝트 명</th>
+						<th>구분</th>
 						<th>등록일자</th>
 						<th>조치희망일</th>
-						<th>처리완료일자</th>
+						<th>조치완료일</th>
 					</tr>
 				</thead>
 				<c:if test="${fn:length(issuelist) == 0}">
@@ -100,10 +84,12 @@
 					<c:forEach items="${issuelist}" var="list">
 						<tr>
 							<c:if test="${list.imergency == 'y'}">
-								<td style="text-align: center; color:red;"><i class="fa fa-exclamation"></i></td>
+								<td style="text-align: center; color: red;">
+									<i class="fa fa-exclamation"></i>
+								</td>
 							</c:if>
 							<c:if test="${list.imergency == 'n'}">
-								<td> </td>
+								<td></td>
 							</c:if>
 							<td>
 								<a href="/web/issue/issueedit?issueseq=${list.issueseq}">${list.title}</a>

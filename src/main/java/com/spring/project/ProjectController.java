@@ -1,5 +1,6 @@
 package com.spring.project;
 
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.spring.issue.IssueDTO;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 public class ProjectController {
@@ -71,6 +74,7 @@ public class ProjectController {
 		return "project.costlist";
 	}
 	
+	//기본정보 탭
 	@GetMapping(value = "/project/centerinfo")
 	public String centerinfo(Model model, String projectseq) {
 		

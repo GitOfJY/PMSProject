@@ -20,7 +20,10 @@ public class IssueDTO {
 	private String itype;
 	private String istateseq;
 	private String iroleseq;
-
+	private String employeeseq;
+	
 	private Date savehopedate;
 	private String state;
+	
+	private String ftitle;
 }
