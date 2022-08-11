@@ -1,8 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="project">
+	<!-- 모든 프로젝트 산출물 출력 -->
+	<select id="alist" resultType="dto">
+		select p.name as name, p.projectSeq as projectseq, w.name as wname, o.*, f.*
+		from tblProject p
+			inner join tblStage s on p.projectSeq = s.projectSeq
+			inner join tblWork w on s.stageSeq = w.stageSeq
+			inner join tblOutput o on w.workSeq = o.workSeq
+			inner join tblFile f on o.outputSeq = f.outputSeq
+		where o.oTypeSeq in (1, 2, 3, 4, 6)
+		order by o.regdate desc, w.name asc
+	</select>
+
+	<!-- 모든 프로젝트 산출물 검색 -->
+	<select id="resultalist" parameterType="HashMap" resultType="dto">
+		select p.name as name, p.projectSeq as projectseq, w.name as wname, o.*, f.*
+		from tblProject p
+	    	inner join tblStage s on p.projectSeq = s.projectSeq
+	    	inner join tblWork w on s.stageSeq = w.stageSeq
+	    	inner join tblOutput o on w.workSeq = o.workSeq
+	    	inner join tblFile f on o.outputSeq = f.outputSeq
+		where o.oTypeSeq in (1, 2, 3, 4, 6)
+			<if test='title != ""'>
+				and title like '%'||#{title}||'%' 
+			</if>
+		order by o.regdate desc, w.name asc
+	</select>
+
+	<!-- 프로젝트 센터 첫 페이지 출력 -->
+	<select id="plist" resultType="pdto">
+		select pj.projectseq, pj.pcode, pj.name, pj.startdate, pj.finishdate, pt.type
+		from tblproject pj
+			inner join tblptype pt on pt.ptypeseq = pj.ptypeseq
+	</select>
+
+
+	<!-- 프로젝트 탭 -->
+	<!-- 1. 요약정보 출력 -->
+	<select id="get" parameterType="String" resultType="pdto">
+		select pj.projectseq as projectseq, pj.name as name, pj.pcode as pcode, pt.type as type, rnd.state as state
+		from tblproject pj
+			inner join tblptype pt on pt.ptypeseq = pj.ptypeseq
+			inner join tblrnd rnd on pj.rndseq = rnd.rndseq
+		where projectseq = #{projectseq}
+	</select>
+
+	<!-- 2. 팀원 출력 -->
+	<select id="team" parameterType="String" resultType="dto">
+		select p.projectSeq as projectseq, e.name as ename, po.position as position
+		from tblProject p
+			inner join tblTeam t on p.projectSeq = t.projectSeq
+			inner join tblEmployee e on t.employeeSeq = e.employeeSeq
+			inner join tblPosition po on e.positionSeq = po.positionSeq
+		where p.projectSeq = #{projectseq}
+		order by decode(position,
+								'상무', 1,
+								'이사', 2,
+								'부장', 3,
+								'차장', 4,
+								'과장', 5,
+								'계장', 6,
+								'대리', 7,
+								'주임', 8,
+								'사원', 9)
+	</select>
+	<!-- 3. WBS 출력 -->
+	<select id="wbs" parameterType="String" resultType="pdto">
+		select * from tblproject where projectseq = #{projectseq}
+	</select>
+
+	<!-- 4. 배정현황 출력 -->
+	<select id="assignment" parameterType="String" resultType="dto">
+		select p.projectSeq as projectseq, e.name as ename, LISTAGG(w.name, ',') WITHIN GROUP(ORDER BY w.name) as wname
+		from tblProject p
+			inner join tblTeam t on p.projectSeq = t.projectSeq
+			inner join tblEmployee e on t.employeeSeq = e.employeeSeq
+			inner join tblWork w on t.teamSeq = w.teamSeq
+		where p.projectSeq = #{projectseq}
+		group by e.name, p.projectSeq
+		order by e.name asc
+	</select>
+
+	<!-- 5. 이슈 출력 -->
+	<select id="issue" parameterType="String" resultType="issuedto">
+		select
+			issueSeq AS ISSUESEQ
+			, title AS TITLE
+			, workSeq AS WORKSEQ
+			, workName AS WORKNAME
+			, projectSeq AS PROJECTSEQ
+			, projectName AS PROJECTNAME
+			, TO_CHAR(regDate, 'YYYY-MM-DD') AS REGDATE
+			, TO_CHAR(hopeDate, 'YYYY-MM-DD') AS HOPEDATE
+			, TO_CHAR(manageDate, 'YYYY-MM-DD') AS MANAGEDATE
+			, content AS CONTENT
+			, imergency AS IMERGENCY
+			, iType AS ITYPE
+			, iStateSeq AS ISTATESEQ
+			, IRoleSeq AS IROLESEQ
+		from TBLISSUE
+		where projectSeq = #{projectseq}
+		order by MANAGEDATE desc, IMERGENCY
+	</select>
+
+	<!-- 5.1 이슈 검색 기능 -->
+	<select id="issueResultList" parameterType="HashMap" resultType="issuedto">
+		select
+			issueSeq AS ISSUESEQ
+			, title AS TITLE
+			, workSeq AS WORKSEQ
+			, workName AS WORKNAME
+			, projectSeq AS PROJECTSEQ
+			, projectName AS PROJECTNAME
+			, TO_CHAR(regDate, 'YYYY-MM-DD') AS REGDATE
+			, TO_CHAR(hopeDate, 'YYYY-MM-DD') AS HOPEDATE
+			, TO_CHAR(manageDate, 'YYYY-MM-DD') AS MANAGEDATE
+			, content AS CONTENT
+			, imergency AS IMERGENCY
+			, iType AS ITYPE
+			, iStateSeq AS ISTATESEQ
+			, IRoleSeq AS IROLESEQ
+		from TBLISSUE
+		where projectSeq = #{projectseq}
+		<if test='title != ""'>
+			AND TITLE LIKE '%'||#{title}||'%' 
+		</if>
+		<if test='imergency != ""'>
+			AND IMERGENCY = #{imergency}
+		</if>
+		order by MANAGEDATE desc, IMERGENCY
 	
-    	
+	</select>
+
+	<!-- 6. 산출물 출력 -->
+	<select id="list" parameterType="String" resultType="dto">
+		select p.name as name, p.projectSeq as projectseq, w.name as wname, o.*, f.*
+		from tblProject p
+			inner join tblStage s on p.projectSeq = s.projectSeq
+			inner join tblWork w on s.stageSeq = w.stageSeq
+			inner join tblOutput o on w.workSeq = o.workSeq
+			inner join tblFile f on o.outputSeq = f.outputSeq
+		where o.oTypeSeq in (1, 2, 3, 4, 6) and p.projectSeq = #{projectseq}
+		order by o.regdate desc, w.name asc
+	</select>
+
+	<select id="seq" parameterType="String" resultType="dto">
+		select projectseq from tblproject where projectseq = #{projectseq}
+	</select>
+	<!-- 6.1 산출물 검색기능 -->
+	<select id="resultlist" parameterType="HashMap" resultType="dto">
+		select p.name as name, p.projectSeq as projectseq, w.name as wname, o.*, f.*
+		from tblProject p
+			inner join tblStage s on p.projectSeq = s.projectSeq
+			inner join tblWork w on s.stageSeq = w.stageSeq
+			inner join tblOutput o on w.workSeq = o.workSeq
+			inner join tblFile f on o.outputSeq = f.outputSeq
+		where o.oTypeSeq in (1, 2, 3, 4, 6) and p.projectSeq = #{projectseq}
+		<if test='title != ""'>
+			and title like '%'||#{title}||'%' 
+		</if>
+		order by o.regdate desc, w.name asc
+	</select>
+
+	
+	<!-- 7. 비용 출력 -->
+	<select id="getcost" parameterType="String" resultType="pdto">
+		select DISTINCT p.projectseq, t.name, cd.costdiv, c.expend, c.exdate
+		from tblcost c 
+			inner join tblcostdivision cd on cd.costdivisionseq = c.costdivisionseq
+			inner join tblbudget b on c.budgetseq = b.budgetseq
+			inner join tblproject p on b.projectseq = p.projectseq
+			inner join tblteam t on p.projectseq = t.projectseq
+		where p.projectseq = #{projectseq}
+	</select>
+
+
+	<select id="projectlist" resultType="dto">
+		select name, projectSeq from tblProject
+	</select>
+	<select id="worklist" resultType="dto">
+		select p.projectSeq as projectSeq , p.name as name, w.name as wname, w.workseq as wworkseq
+		from tblProject p
+			inner join tblStage s on p.projectSeq = s.projectSeq
+			inner join tblWork w on s.stageSeq = w.stageSeq
+	</select>
+
+	<select id="info" parameterType="String" resultType="dto">
+		select f.fileseq as fileseq, f.title as title, p.name as name, w.name as wname, t.type as type, o.fileExplain as fileExplain, p.projectSeq as projectseq, o.outputseq as outputseq
+		from tblProject p
+			inner join tblStage s on p.projectSeq = s.projectSeq
+			inner join tblWork w on s.stageSeq = w.stageSeq
+			inner join tblOutput o on w.workSeq = o.workSeq
+			inner join tblFile f on o.outputSeq = f.outputSeq
+			inner join tblOType t on o.oTypeSeq = t.oTypeSeq
+		where o.oTypeSeq in (1, 2, 3, 4, 6) and f.fileseq = #{fileseq}
+	</select>
+
+	<!-- 산출물 삭제 -->
+	<delete id="outputdel" parameterType="String">
+		delete from tbloutput where outputseq=#{outputseq}
+	</delete>
+	
+	<!-- 산출물 수정 -->
+	<update id="outputedit" parameterType="dto">
+		update tblOutput
+		set workSeq=#{workseq},oTypeSeq=#{otypeseq}, fileExplain=#{fileexplain}
+			where outputSeq=#{outputseq}
+	</update>
+	
+	<!-- 산출물 등록 -->
+	<insert id="outputadd" parameterType="dto">
+		insert all
+		into tblOutput(outputSeq, workSeq, oTypeSeq, issueSeq, fileExplain, regDate, version)
+			values(outputseq.nextVal, #{workseq}, #{otypeseq}, null, #{fileexplain}, sysdate, 1)
+				into tblFile(fileSeq, outputSeq, title)
+					values(fileSeq.nextVal, outputseq.nextVal, #{title})
+						select * from dual
+	</insert>
 </mapper>

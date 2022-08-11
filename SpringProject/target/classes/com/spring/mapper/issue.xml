@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="issue">
+	<select id="issuelist" parameterType="String" resultType="issuedto">
+		SELECT
+		issueSeq AS ISSUESEQ
+		, title AS TITLE
+		, workSeq AS WORKSEQ
+		, workName AS WORKNAME
+		, projectSeq AS PROJECTSEQ
+		, projectName AS PROJECTNAME
+		, TO_CHAR(regDate, 'YYYY-MM-DD') AS REGDATE
+		, TO_CHAR(hopeDate, 'YYYY-MM-DD') AS HOPEDATE
+		, TO_CHAR(manageDate, 'YYYY-MM-DD') AS MANAGEDATE
+		, content AS CONTENT
+		, imergency AS IMERGENCY
+		, iType AS ITYPE
+		, iStateSeq AS ISTATESEQ
+		, iRoleSeq AS IROLESEQ
+		FROM TBLISSUE
+		WHERE employeeseq = #{employeeseq}
+		order by MANAGEDATE desc, IMERGENCY
+	</select>
+
+	<select id="editlist" parameterType="String" resultType="issuedto"> 
+		select * from tblissue where issueseq = #{issueseq}
+	</select>
+
+	<select id="resultlist" parameterType="HashMap" resultType="issuedto">
+		SELECT
+		issueSeq AS ISSUESEQ
+		, title AS TITLE
+		, workSeq AS WORKSEQ
+		, workName AS WORKNAME
+		, projectSeq AS PROJECTSEQ
+		, projectName AS PROJECTNAME
+		, TO_CHAR(regDate, 'YYYY-MM-DD') AS REGDATE
+		, TO_CHAR(hopeDate, 'YYYY-MM-DD') AS HOPEDATE
+		, TO_CHAR(manageDate, 'YYYY-MM-DD') AS MANAGEDATE
+		, content AS CONTENT
+		, imergency AS IMERGENCY
+		, iType AS ITYPE
+		, iStateSeq AS ISTATESEQ
+		, IRoleSeq AS IROLESEQ
+		FROM TBLISSUE
+		WHERE employeeseq = #{employeeseq}
+		<if test='title != ""'>
+			AND TITLE LIKE '%'||#{title}||'%'
+		</if>
+		<if test='imergency != ""'>
+			AND IMERGENCY = #{imergency}
+		</if>
+		order by MANAGEDATE desc, IMERGENCY
+	</select>
+
+	<select id="issueproject" parameterType="String" resultType="issueprojectdto">
+		select projectseq AS projectseq, name AS name from tblproject
+		where projectseq in (select projectseq from tblteam where employeeSeq = #{employeeSeq})
+	</select>
+
+	<select id="issuework" parameterType="String" resultType="issueworkdto">
+		select w.workseq as workseq, w.name as name, e.employeeseq as employeeseq
+		from tblWork w
+		inner join tblTeam t on w.teamseq = t.teamseq
+		inner join tblemployee e on t.employeeseq = e.employeeseq
+		where e.employeeseq = #{employeeSeq}
+	</select>
+	<!-- <insert id="add" parameterType="issuedto"> insert into tblIssue (issueSeq, title, workSeq, workName, projectSeq, projectName, regDate, hopeDate, content, imergency, iType, iStateSeq, employeeseq) values (issueSeq.nextval, #{title}, #{workseq}, (select name from tblwork where workSeq = #{workseq}), #{projectseq}, (select name from tblproject where projectSeq = #{projectseq}), sysdate, #{hopedate}, #{content}, #{imergency}, #{itype}, #{istateseq}, #{employeeseq}) </insert> -->
+
+	<insert id="add" parameterType="issuedto">
+		insert all
+		into tblIssue (issueSeq, title, workSeq, workName, projectSeq, projectName, regDate, hopeDate, content, imergency, iType, iStateSeq, employeeseq)
+		values (issueSeq.nextval, #{title}, #{workseq},
+		(select name from tblwork where workSeq = #{workseq}), #{projectseq},
+		(select name from tblproject where projectSeq = #{projectseq}),
+		sysdate, #{hopedate}, #{content}, #{imergency}, #{itype}, #{istateseq}, #{employeeseq})
+		into tblOutput(outputSeq, workSeq, oTypeSeq, regDate, version, issueSeq)
+		values(outputseq.nextVal, #{workseq}, 5, sysdate, 1, issueSeq.nextval)
+		into tblFile(fileSeq, outputSeq, title)
+		values(fileSeq.nextVal, outputseq.nextVal, #{ftitle})
+		select * from dual
+	</insert>
+</mapper>

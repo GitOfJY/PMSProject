@@ -16,20 +16,6 @@ public class DashboardDAOImpl implements DashboardDAO {
 	public DashboardDAOImpl(SqlSessionTemplate template) {
 		this.template = template;
 	}
-
-	
-	
-	@Override
-	public List<DashboardDTO> tnamelist() {
-		return template.selectList("dashboardall.tnamelist");
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public List<DashboardDTO> projectlist() {
@@ -44,6 +30,21 @@ public class DashboardDAOImpl implements DashboardDAO {
 	@Override
 	public List<DashboardDTO> barchart() {
 		return template.selectList("dashboardall.barchart");
+	}
+
+	
+	
+	
+	
+	//비용지표
+	@Override
+	public List<DashboardDTO> tnamelist() {
+		return template.selectList("dashboardall.tnamelist");
+	}
+
+	@Override
+	public List<DashboardDTO> list(String string) {
+		return null;
 	}
 
 

@@ -49,7 +49,7 @@ public class DashboardController {
 		List<DashboardDTO> barchart = service.barchart();
 		model.addAttribute("barchart", barchart);
 		
-		return "dashboardall";
+		return "dashboard.dashboardall";
 	}
 	
 	
@@ -58,20 +58,20 @@ public class DashboardController {
 	@GetMapping(value="/dashboardteam")
 	public String dashbaordteam(Model model) {
 	
-		return "dashboardteam";
+		return "dashboard.dashboardteam";
 	}
 	
 	@GetMapping(value="/dashboardeach")
 	public String dashbaordeach(Model model) {
 	
-		return "dashboardeach";
+		return "dashboard.dashboardeach";
 	}
 
 	
 	@GetMapping(value="/dashboardproject")
 	public String dashbaordproject(Model model) {
 	
-		return "dashboardproject";
+		return "dashboard.dashboardproject";
 	}
 	
 	@GetMapping(value="/mypage")
@@ -81,7 +81,7 @@ public class DashboardController {
 		//LoginDTO(employeeseq=1, name=홍길동, email=admin@sysoft.com, pw=admin12345)
 		//List<DashboardDTO> barchart = service.barchart();
 		model.addAttribute("result", result);
-		return "mypage";
+		return "dashboard.mypage";
 	}
 
 }

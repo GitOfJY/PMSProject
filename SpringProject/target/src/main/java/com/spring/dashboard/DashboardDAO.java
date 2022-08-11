@@ -12,5 +12,7 @@ public interface DashboardDAO {
 
 	List<DashboardDTO> projectlist();
 
+	List<DashboardDTO> list(String string);
+
 
 }

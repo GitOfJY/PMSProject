@@ -18,7 +18,7 @@ public class DashboardServiceImpl implements DashboardService {
 
 	@Override
 	public List<DashboardDTO> tnamelist() {
-			//List<DashboardDTO> tnamelist = dao.list("dashboardall.tnamelist");
+		List<DashboardDTO> tnamelist = dao.list("dashboardall.tnamelist");
 		   //select distinct tname from viewDashProjectCost
 
 		    //for (DashboardDTO dto : tnamelist) {

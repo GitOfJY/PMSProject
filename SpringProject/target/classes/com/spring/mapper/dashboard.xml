@@ -4,23 +4,14 @@
 
 <mapper namespace="dashboardall">
 
+	<!-- 비용 teamname -->
 	<select id="tnamelist" resultType="dashboarddto">
 		select distinct tname from viewDashProjectCost
 	</select>
 	
 	<!-- 
 	비용  sql 
-	select 
-	    t.name,
-	    cd.costdiv,
-	    b.infancy
-	from tblcost c
-    inner join tblbudget b on c.budgetseq = b.budgetseq
-    inner join tblproject p on b.projectseq = p.projectseq
-    inner join tblteam t on t.projectseq = p.projectseq
-    inner join tblcostdivision cd on cd.costdivisionseq = c.costdivisionseq
-    group by t.name, cd.costdiv, b.infancy
-    order by t.name
+	select distinct * from viewDashProjectCost where tname = #{tname}
 	-->
 
 	

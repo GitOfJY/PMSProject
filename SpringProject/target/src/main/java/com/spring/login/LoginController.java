@@ -34,7 +34,6 @@ public class LoginController {
 		//System.out.println("전달된 데이터 : " + dto);
 		LoginDTO result = service.login(dto);
 		//System.out.println("전달받은 데이터 : " + result);
-		
 		try {
 			
 			if (result != null) {
