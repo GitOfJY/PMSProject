@@ -1,7 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="project">
+	<!-- 프로젝트 센터 첫 페이지 출력 -->
+	<!--  
+	<select id="plist" resultType="pdto">
+		select pj.projectseq, pj.pcode, pj.name, pj.startdate, pj.finishdate, pt.type
+		from tblproject pj
+			inner join tblptype pt on pt.ptypeseq = pj.ptypeseq
+	</select>
+	-->
+	<select id="plist" resultType="pdto">
+	select 
+    p.name as name, p.pcode as pcode, pt.type as type, p.startdate as startdate, p.finishdate as finishdate,
+    t.name as team, vi.issucnt as issuecnt, vo.outputcnt as outputcnt, ps.state as pstate, rnd.state as state, p.projectseq as projectseq
+	from tblteam t
+    inner join tblEmployee e on t.employeeseq = e.employeeseq
+    inner join tblProject p on p.projectseq = t.projectseq
+    inner join tblrnd rnd on rnd.rndseq = p.rndseq
+    inner join tblrole r on r.roleseq = t.roleseq
+    inner join tblpState ps on ps.pstateseq = p.pstateseq
+    inner join tblptype pt on pt.ptypeseq = p.ptypeseq
+    left outer join vdashissue vi on t.name = vi.name
+    left outer join voutputcount vo on t.name = vo.name
+    where r.role='PL'
+    order by p.projectseq
+	</select>
+
+	<!-- 프로젝트 센터 팀 리스트 -->
+	<select id="teamlist" resultType="pdto">
+		select distinct name as team from tblteam order by team
+	</select>
+	
+	
+	<!-- 프로젝트 센터 진행상태 리스트  -->
+	<select id="statelist" resultType="pdto">
+		select state as pstate from tblpstate
+	</select>
+
+	<!-- 프로젝트 센터 검색 -->
+	<select id="projectsearch" parameterType="HashMap" resultType="pdto"> 
+		select 
+	    p.name as name, p.pcode as pcode, pt.type as type, p.startdate as startdate, p.finishdate as finishdate,
+	    t.name as team, vi.issucnt as issuecnt, vo.outputcnt as outputcnt, ps.state as pstate, rnd.state as state, p.projectseq as projectseq
+		from tblteam t
+	    inner join tblEmployee e on t.employeeseq = e.employeeseq
+	    inner join tblProject p on p.projectseq = t.projectseq
+	    inner join tblrnd rnd on rnd.rndseq = p.rndseq
+	    inner join tblrole r on r.roleseq = t.roleseq
+	    inner join tblpState ps on ps.pstateseq = p.pstateseq
+	    inner join tblptype pt on pt.ptypeseq = p.ptypeseq
+	    left outer join vdashissue vi on t.name = vi.name
+	    left outer join voutputcount vo on t.name = vo.name
+	    where r.role='PL'
+	    <if test='pstate != ""'>
+	    and ps.state = #{pstate}
+	    </if>
+	    <if test='team != ""'>
+	    and t.name = #{team}
+	    </if>
+	    order by p.projectseq
+	</select>
+
 	<!-- 모든 프로젝트 산출물 출력 -->
 	<select id="alist" resultType="dto">
 		select p.name as name, p.projectSeq as projectseq, w.name as wname, o.*, f.*
@@ -29,24 +88,49 @@
 		order by o.regdate desc, w.name asc
 	</select>
 
-	<!-- 프로젝트 센터 첫 페이지 출력 -->
-	<select id="plist" resultType="pdto">
-		select pj.projectseq, pj.pcode, pj.name, pj.startdate, pj.finishdate, pt.type
-		from tblproject pj
-			inner join tblptype pt on pt.ptypeseq = pj.ptypeseq
-	</select>
-
 
 	<!-- 프로젝트 탭 -->
 	<!-- 1. 요약정보 출력 -->
-	<select id="get" parameterType="String" resultType="pdto">
+<!-- 	<select id="get" parameterType="String" resultType="pdto">
 		select pj.projectseq as projectseq, pj.name as name, pj.pcode as pcode, pt.type as type, rnd.state as state
 		from tblproject pj
 			inner join tblptype pt on pt.ptypeseq = pj.ptypeseq
 			inner join tblrnd rnd on pj.rndseq = rnd.rndseq
 		where projectseq = #{projectseq}
+	</select> -->
+
+	<select id="get" parameterType="String" resultType="pdto">
+	select 
+    p.name as name, p.pcode as pcode, pt.type as type, p.startdate as startdate, p.finishdate as finishdate,
+    e.name as employeename,r.role as role, t.name as team, vi.issucnt as issuecnt, vo.outputcnt as outputcnt, ps.state as pstate, rnd.state as state, p.projectseq as projectseq
+	from tblteam t
+    inner join tblEmployee e on t.employeeseq = e.employeeseq
+    inner join tblProject p on p.projectseq = t.projectseq
+    inner join tblrnd rnd on rnd.rndseq = p.rndseq
+    inner join tblrole r on r.roleseq = t.roleseq
+    inner join tblpState ps on ps.pstateseq = p.pstateseq
+    inner join tblptype pt on pt.ptypeseq = p.ptypeseq
+    left outer join vdashissue vi on t.name = vi.name
+    left outer join vdashoutput vo on t.name = vo.name
+    where p.projectseq = #{projectseq} and r.role='PL'
 	</select>
 
+	<select id="pmo" parameterType="String" resultType="pdto">
+		select 
+    p.name as name, p.pcode as pcode, pt.type as type, p.startdate as startdate, p.finishdate as finishdate,
+    e.name as employeename,r.role as role, t.name as team, vi.issucnt as issuecnt, vo.outputcnt as outputcnt, ps.state as pstate, rnd.state as state, p.projectseq as projectseq
+	from tblteam t
+    inner join tblEmployee e on t.employeeseq = e.employeeseq
+    inner join tblProject p on p.projectseq = t.projectseq
+    inner join tblrnd rnd on rnd.rndseq = p.rndseq
+    inner join tblrole r on r.roleseq = t.roleseq
+    inner join tblpState ps on ps.pstateseq = p.pstateseq
+    inner join tblptype pt on pt.ptypeseq = p.ptypeseq
+    left outer join vdashissue vi on t.name = vi.name
+    left outer join vdashoutput vo on t.name = vo.name
+    where p.projectseq = #{projectseq} and r.role='PMO'
+	</select>
+	
 	<!-- 2. 팀원 출력 -->
 	<select id="team" parameterType="String" resultType="dto">
 		select p.projectSeq as projectseq, e.name as ename, po.position as position
@@ -73,7 +157,7 @@
 
 	<!-- 4. 배정현황 출력 -->
 	<select id="assignment" parameterType="String" resultType="dto">
-		select p.projectSeq as projectseq, e.name as ename, LISTAGG(w.name, ',') WITHIN GROUP(ORDER BY w.name) as wname
+		select p.projectSeq as projectseq, e.name as ename, LISTAGG(w.name, ', ') WITHIN GROUP(ORDER BY w.name) as wname
 		from tblProject p
 			inner join tblTeam t on p.projectSeq = t.projectSeq
 			inner join tblEmployee e on t.employeeSeq = e.employeeSeq

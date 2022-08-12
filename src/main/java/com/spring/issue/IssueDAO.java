@@ -19,5 +19,6 @@ public interface IssueDAO {
 
 	int add(IssueDTO dto);
 
+	int editok(IssueDTO dto);
 
 }

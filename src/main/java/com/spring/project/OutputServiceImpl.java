@@ -1,22 +1,12 @@
 package com.spring.project;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
 import com.spring.issue.IssueDAO;
 import com.spring.issue.IssueDTO;
 
-//진짜 게시판이면 여기서 페이징, 검색, 출력 조작, 다 여기서 한다.
 @Service
 public class OutputServiceImpl implements OutputService {
 

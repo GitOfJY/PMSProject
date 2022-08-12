@@ -1,16 +1,15 @@
 package com.spring.project;
 
-import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import com.spring.issue.IssueDTO;
-
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 public class ProjectController {
@@ -27,6 +26,8 @@ public class ProjectController {
 	public String list(Model model) {
 		
 		List<ProjectDTO> list = service.list();
+		List<ProjectDTO> statelist = service.statelist();
+		List<ProjectDTO> teamlist = service.teamlist();
 		
 		for (ProjectDTO dto : list) {
 			dto.setStartdate(dto.getStartdate().substring(0, 10));
@@ -34,14 +35,33 @@ public class ProjectController {
 		}
 		
 		model.addAttribute("list", list);
+		model.addAttribute("statelist", statelist);
+		model.addAttribute("teamlist", teamlist);
+		
 		return "project.projectcenter";
 	}
 	
-	//등록 페이지
-	@GetMapping(value = "/project/addproject")
-	public String addproject(Model model) {
-		return "project.addproject";
+	//프로젝트 센터 메인 검색기능
+	@GetMapping(value = "/project/projectsearch")
+	public String projectsearch(Model model, HttpServletRequest req) {
+		String pstate = req.getParameter("pstate");
+		String team = req.getParameter("team");
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("pstate", pstate);
+		param.put("team", team);
+		
+		List<Map<String, String>> list = service.projectsearch(param);
+		List<ProjectDTO> statelist = service.statelist();
+		List<ProjectDTO> teamlist = service.teamlist();
+		
+		model.addAttribute("list", list);
+		model.addAttribute("statelist", statelist);
+		model.addAttribute("teamlist", teamlist);
+		
+		return "project.projectcenter";
 	}
+	
 	
 	//팀원 탭
 	@GetMapping(value = "/project/centerteam")
@@ -68,6 +88,7 @@ public class ProjectController {
 		
 		for (ProjectDTO dto : getcost) {
 			dto.setExdate(dto.getExdate().substring(0, 10));
+			dto.setExpend(String.format("%,d", Integer.parseInt(dto.getExpend())));
 		}
 		model.addAttribute("getcost", getcost);
 		
@@ -77,9 +98,10 @@ public class ProjectController {
 	//기본정보 탭
 	@GetMapping(value = "/project/centerinfo")
 	public String centerinfo(Model model, String projectseq) {
-		
+		ProjectDTO pmo = service.pmo(projectseq);
 		ProjectDTO dto = service.get(projectseq);
 		model.addAttribute("dto", dto);
+		model.addAttribute("pmo", pmo);
 		return "project.centerinfo";
 
 	}

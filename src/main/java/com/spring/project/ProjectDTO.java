@@ -26,6 +26,9 @@ public class ProjectDTO {
 	private String expectstart;
 	private String expectfinish;
 	
+	//진행상태 테이블
+	private String pstate;
+	
 	//비용 테이블
 	private String expend;
 	private String exdate;
@@ -36,4 +39,14 @@ public class ProjectDTO {
 	//롤 테이블
 	private String roleseq;
 	private String role;
+	
+	//팀 테이블
+	private String team;
+	
+	//프로젝트 산출물, 이슈 
+	private String outputcnt;
+	private String issuecnt;
+	
+	//사원 테이블
+	private String employeename;
 }
