@@ -156,9 +156,9 @@ tr {
 
 								<td class="" role="gridcell" align=center>${dto.type}</td>
 
-								<td class="" role="gridcell" align=center>${dto.startdate}</td>
+								<td class="" role="gridcell" align=center>${dto.startdate.substring(0,10)}</td>
 
-								<td class="" role="gridcell" align=center>${dto.finishdate}</td>
+								<td class="" role="gridcell" align=center>${dto.finishdate.substring(0,10)}</td>
 
 								<!-- 프로그래스 바 수정*-->
 								<td class="" role="gridcell" align=center>
