@@ -12,7 +12,8 @@ PMS 서비스는
 
 개발 기간
 
-기술 스택
+기술 스택  
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
 
 개발 환경
 
