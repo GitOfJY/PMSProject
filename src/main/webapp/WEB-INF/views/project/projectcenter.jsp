@@ -1,5 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var form = document.getElementById("projectForm");
+
+		$("#search").click(function() {
+			form.action = "/web/project/projectsearch";
+			form.method = "GET";
+			form.submit();
+		});
+
+	});
+</script>
 <style>
 table {
 	border: 1px solid #E0E0E0;
@@ -50,91 +65,83 @@ tr {
 </style>
 <div class="multi-portlet">
 	<div class="row">
+		<!-- 검색  -->
 		<div class="col-lg-12 col-md-9 col-sm-12 col-xs-12 search-section">
 			<div class="row search-form">
-
 				<div class="col-md-10">
-					<div class="row align-items-center">
-						<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
-							<div class="kt-input-icon kt-input-icon--left">
-								<select id="ddlProjectStatus" class="form-control select2me">
-									<option value="">프로젝트 상태를 선택하세요</option>
-									<option value="시작전">시작전</option>
-									<option value="정상진행">진행중</option>
-									<option value="지연진행">지연진행</option>
-									<option value="홀드">홀드</option>
-									<option value="드롭">완료</option>
-									<option value="종료">진행중단</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
-							<div class="kt-input-icon kt-input-icon--left" style="width: 200px">
-								<select id="ddlProjectStatus" class="form-control select2me">
-									<option value="">팀을 선택하세요</option>
-									<option value="1팀">1팀</option>
-									<option value="2팀">2팀</option>
-									<option value="3팀">3팀</option>
-								</select>
-							</div>
-						</div>
-						<div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
-							<div class="input-group">
-								<div class="kt-input-icon kt-input-icon--left" style="width: 210px;">
-									<input id="searchValue" type="text" class="form-control" placeholder="Search...">
-									<span class="kt-input-icon__icon kt-input-icon__icon--left"> <span><i class="la la-search"></i></span>
-									</span>
-								</div>
-								<div class="input-group-append">
-									<button type="button" class="btn point-color btn-rounded" onclick="ExcuteSearch();">
-										<i class="icon-magnifier"></i> 검색
-									</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
 
+					<form id="projectForm">
+						<div class="row align-items-center">
+							<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+								<div class="kt-input-icon kt-input-icon--left">
+									<select id="pstate" name="pstate" class="form-control select2me select2-hidden-accessible" data-select2-id="ddlStatus" tabindex="-1" aria-hidden="true">
+										<option value="" selected>프로젝트 상태를 선택하세요</option>
+										<c:forEach items="${statelist}" var="dto">
+											<option value="${dto.pstate}">${dto.pstate}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
+								<div class="kt-input-icon kt-input-icon--left">
+									<select id="team" name="team" class="select2me form-control select2-hidden-accessible" style="width: 100%;" data-select2-id="ddlProjectList" tabindex="-1" aria-hidden="true">
+										<option value="" selected>팀을 선택하세요</option>
+										<c:forEach items="${teamlist}" var="dto">
+											<option value="${dto.team}">${dto.team}</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+							<div class="col-md-4 kt-margin-b-20-tablet-and-mobile">
+								<div class="input-group">
+									<div class="kt-input-icon kt-input-icon--left">
+										<button id="search" class="btn btn-primary">검색</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</form>
+
+				</div>
 				<!-- 관리자만 볼 수 있게 -->
-				<!--<div class="col-md-2 kt-align-right">
+				<!-- 
+				<div class="col-md-2 kt-align-right">
 					<a href="/web/project/addproject" class="btn btn-primary btn-icon-split">
 						<span class="icon text-white-50"> <i class="fa fa-plus" aria-hidden="true"></i>
 						</span> <span class="text">프로젝트 등록</span>
 					</a>
-				</div> -->
+				</div>
+				 -->
 			</div>
 		</div>
-
-		<div class="col-lg-12 col-md-9 col-sm-12 col-xs-12">
-			<div class="k-widget k-grid pms-default-grid" id="grid">
-				<table>
-					<colgroup>
-						<col style="width: 70px" />
-						<col style="width: 550px" />
-						<col style="width: 280px" />
-						<col style="width: 280px" />
-						<col style="width: 230px" />
-						<col style="width: 230px" />
-						<col style="width: 230px" />
-						<col style="width: 160px" />
-						<col style="width: 160px" />
-					</colgroup>
-					<thead class="k-grid-header">
+		<div class="table-responsive">
+			<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+				<colgroup>
+					<col style="width: 70px" />
+				</colgroup>
+				<thead class="text-center">
+					<tr>
+						<th scope="col"><span class="k-link">순번</span></th>
+						<th scope="col"><span class="k-link">프로젝트 명</span></th>
+						<th scope="col"><span class="k-link">프로젝트 코드</span></th>
+						<th scope="col"><span class="k-link">프로젝트 유형</span></th>
+						<th scope="col"><span class="k-link">시작일</span></th>
+						<th scope="col"><span class="k-link">완료일</span></th>
+						<th scope="col"><span class="k-link">계획/실적</span></th>
+						<th scope="col"><span class="k-link">산출물</span></th>
+						<th scope="col"><span class="k-link">이슈</span></th>
+					</tr>
+				</thead>
+				<c:if test="${fn:length(list) == 0}">
+					<tbody>
 						<tr>
-							<th scope="col"><span class="k-link">순번</span></th>
-							<th scope="col"><span class="k-link">프로젝트 명</span></th>
-							<th scope="col"><span class="k-link">프로젝트 코드</span></th>
-							<th scope="col"><span class="k-link">프로젝트 유형</span></th>
-							<th scope="col"><span class="k-link">시작일</span></th>
-							<th scope="col"><span class="k-link">완료일</span></th>
-							<th scope="col"><span class="k-link">계획/실적</span></th>
-							<th scope="col"><span class="k-link">산출물</span></th>
-							<th scope="col"><span class="k-link">이슈</span></th>
+							<td colspan="9" style="text-align: center;">검색된 결과가 없습니다.</td>
 						</tr>
-					</thead>
-
-					<tbody role="rowgroup">
-
+					</tbody>
+				</c:if>
+				<c:if test="${fn:length(list) > 0}">
+					<tbody>
 						<c:forEach items="${list}" var="dto">
 							<tr>
 								<td class="" role="gridcell" align=center>${dto.projectseq}</td>
@@ -153,13 +160,11 @@ tr {
 
 								<td class="" role="gridcell" align=center>${dto.finishdate}</td>
 
-
-								<!-- 프로그래스 바 -->
+								<!-- 프로그래스 바 수정*-->
 								<td class="" role="gridcell" align=center>
 									<div style="width: 100%; padding-left: 3px">
 										<div data-value="13" class="progress progress-sm progress-half-rounded m-md ligh" style="float: left; width: 70%;">
 											<div class="progress-bar progress-bar-primary rounded-3" role="progressbar" aria-valuenow="13" aria-valuemin="0" aria-valuemax="100" style="background-color: #32c5d2; width: 50%;"></div>
-											<!-- width = progress 길이 조절 -->
 										</div>
 										<div style="float: left; text-align: right; color: #808080; font-size: 10px; margin-top: -3px; margin-left: 1px; width: 25%;">50%</div>
 									</div>
@@ -174,21 +179,21 @@ tr {
 								<!-- 산출물 -->
 								<td class="" role="gridcell" align=center>
 									<a href="/web/project/outputlist?projectseq=${dto.projectseq}">
-										<span class="kt-badge kt-badge--unified-danger kt-badge--lg kt-badge--bold"> 0 </span>
+										<span class="kt-badge kt-badge--unified-danger kt-badge--lg kt-badge--bold"> ${not empty dto.outputcnt ? dto.outputcnt : "0"} </span>
 									</a>
 								</td>
 
 								<!-- 이슈 -->
 								<td class="" role="gridcell" align=center>
-									<a href="#!">
-										<span class="kt-badge kt-badge--unified-danger kt-badge--lg kt-badge--bold"> 0 </span>
+									<a href="/web/project/issue?projectseq=${dto.projectseq}">
+										<span class="kt-badge kt-badge--unified-danger kt-badge--lg kt-badge--bold" style="color: red;"> ${not empty dto.issuecnt ? dto.issuecnt : "0"} </span>
 									</a>
 								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
-				</table>
-			</div>
+				</c:if>
+			</table>
 		</div>
 	</div>
 </div>

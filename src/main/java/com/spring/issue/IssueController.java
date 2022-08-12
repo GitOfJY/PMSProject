@@ -151,6 +151,35 @@ public class IssueController {
 		model.addAttribute("list", list);
 		return "issue.issueedit";
 	}
+	
+	//이슈 수정
+	@PostMapping(value =  "/issue/issueeditok")
+	public String editok(HttpServletRequest req, HttpSession session) {
+		
+		IssueDTO dto = new IssueDTO();
+		dto.setIssueseq(req.getParameter("issueseq"));
+		dto.setTitle(req.getParameter("title"));
+		dto.setWorkseq(req.getParameter("workseq"));
+		dto.setWorkname(req.getParameter("workname"));
+		dto.setProjectseq(req.getParameter("projectseq"));
+		dto.setProjectname(req.getParameter("projectname"));
+		dto.setRegdate(req.getParameter("regdate"));
+		dto.setHopedate(req.getParameter("hopedate"));
+		dto.setManagedate(req.getParameter("managedate"));
+		dto.setContent(req.getParameter("content"));
+		dto.setImergency(req.getParameter("imergency"));
+		dto.setItype(req.getParameter("itype"));
+		dto.setIstateseq(req.getParameter("istateseq"));
+		
+		int result = service.editok(dto);
+
+		if (result == 1) {
+			return "redirect:/issue/issuelist";
+		} else {
+			return "redirect:" + req.getHeader("Referer");
+		}
+		
+	}
 
 	
 }

@@ -134,9 +134,9 @@ hr {
 						<table class="table table-bordered table-hover cost" id="dataTable" width="100%" cellspacing="0">
 							<thead class="text-center">
 								<tr>
+									<th>부서</th>
 									<th>비용항목</th>
 									<th>지출비용</th>
-									<th>부서</th>
 									<th>지출일자</th>
 									<th>등록일</th>
 								</tr>
@@ -153,9 +153,7 @@ hr {
 										</td>
 
 										<td style="text-align: center;" class="" role="gridcell">
-											<div class="forum-list-title">
-												<fmt:formatNumber value="${dto.expend}" pattern="#,###,###" />
-											</div>
+											<div class="forum-list-title">${dto.expend}</div>
 										</td>
 
 										<td style="text-align: center;" class="" role="gridcell">
@@ -174,3 +172,4 @@ hr {
 			</div>
 		</div>
 	</div>
+</div>

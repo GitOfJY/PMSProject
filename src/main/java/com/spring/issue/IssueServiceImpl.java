@@ -41,4 +41,9 @@ public class IssueServiceImpl implements IssueService {
 	public int add(IssueDTO dto) {
 		return dao.add(dto);
 	}
+	
+	@Override
+	public int editok(IssueDTO dto) {
+		return dao.editok(dto);
+	}
 }

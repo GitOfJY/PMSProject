@@ -1,8 +1,7 @@
 package com.spring.project;
 
 import java.util.List;
-
-import com.spring.issue.IssueDTO;
+import java.util.Map;
 
 public interface ProjectDAO {
 
@@ -16,5 +15,12 @@ public interface ProjectDAO {
 
 	List<ProjectDTO> team(String projectseq);
 
+	List<ProjectDTO> statelist();
+
+	List<ProjectDTO> teamlist();
+
+	List<Map<String, String>> projectsearch(Map<String, Object> param);
+
+	ProjectDTO pmo(String projectseq);
 
 }

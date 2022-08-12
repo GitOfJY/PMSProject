@@ -47,4 +47,9 @@ public class IssueDAOImpl implements IssueDAO {
 	public int add(IssueDTO dto) {
 		return template.insert("issue.add", dto);
 	}
+	
+	@Override
+	public int editok(IssueDTO dto) {
+		return template.update("issue.edit", dto);
+	}
 }

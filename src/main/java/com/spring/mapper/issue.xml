@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="issue">
 	<select id="issuelist" parameterType="String" resultType="issuedto">
 		SELECT
@@ -67,6 +65,7 @@
 		inner join tblemployee e on t.employeeseq = e.employeeseq
 		where e.employeeseq = #{employeeSeq}
 	</select>
+	
 	<!-- <insert id="add" parameterType="issuedto"> insert into tblIssue (issueSeq, title, workSeq, workName, projectSeq, projectName, regDate, hopeDate, content, imergency, iType, iStateSeq, employeeseq) values (issueSeq.nextval, #{title}, #{workseq}, (select name from tblwork where workSeq = #{workseq}), #{projectseq}, (select name from tblproject where projectSeq = #{projectseq}), sysdate, #{hopedate}, #{content}, #{imergency}, #{itype}, #{istateseq}, #{employeeseq}) </insert> -->
 
 	<insert id="add" parameterType="issuedto">
@@ -82,4 +81,17 @@
 		values(fileSeq.nextVal, outputseq.nextVal, #{ftitle})
 		select * from dual
 	</insert>
+	
+	<update id="edit" parameterType="issuedto">
+		update tblIssue 
+		set  
+		title= #{title},
+		imergency=#{imergency}, 
+		iType=#{itype},
+		workSeq=#{workseq},
+		workName=(select name from tblwork where workSeq = #{workseq}), 
+		content=#{content},
+		hopeDate=#{hopedate}
+		where issueSeq = #{issueseq}
+	</update>
 </mapper>

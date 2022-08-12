@@ -10,8 +10,7 @@
 		</div>
 		<div class="card-body">
 			<!-- Page Heading -->
-
-			<form id="issueEdit">
+			<form id="issueEdit" method="POST" action="/web/issue/issueeditok" enctype="multipart/form-data">
 				<!-- 이슈상세정보 -->
 				<div class="form-group">
 					<label for="issuetitle">제목</label>
@@ -33,7 +32,7 @@
 				</div>
 				<div class="form-group">
 					<label for="issuetype">이슈 구분</label>
-					<select class="form-control" id="issuetype" name="iType" required="required">
+					<select class="form-control" id="issuetype" name="itype" required="required">
 						<c:if test="${list.itype == '고객변심' }">
 							<option selected="selected" value="고객변심">고객변심</option>
 						</c:if>
@@ -49,7 +48,7 @@
 						<c:if test="${list.itype == '기타이슈' }">
 							<option selected="selected" value="기타이슈">기타이슈</option>
 						</c:if>
-						
+
 					</select>
 				</div>
 				<div class="form-group">
@@ -67,7 +66,7 @@
 
 				<div class="form-group">
 					<label for="inputFile">첨부파일</label>
-					<input class="form-control" type="file" id="ftitle" name="ftitle" required="required">
+					<input class="form-control" type="file" id="ftitle" name="ftitle">
 				</div>
 				<label for="content">이슈 내용</label>
 				<textarea class="form-control" id="content" name="content" rows="3" required="required">${list.content}</textarea>
@@ -90,12 +89,14 @@
 						</c:if>
 					</select>
 				</div>
+				<div class="btns" style="text-align: right;">
+					<input type="submit" value="수정" class="btn btn-primary">
+					<input type="button" value="취소" class="btn btn-primary" onclick="history.back();">
+				</div>
+				<input type="hidden" name="issueseq" value="${list.issueseq}" />
 			</form>
 
-			<div class="btns" style="text-align: right;">
-				<input type="button" value="수정" class="btn btn-primary" onclick="location.href='/web/issue/issueeditok';">
-				<input type="button" value="취소" class="btn btn-primary" onclick="history.back();">
-			</div>
+
 
 		</div>
 	</div>

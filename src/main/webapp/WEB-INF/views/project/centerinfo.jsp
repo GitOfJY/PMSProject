@@ -126,7 +126,6 @@ hr {
 				<hr>
 
 				<div style="margin-left: 30px; margin-right: 30px;">
-					<!-- 프로젝트 정보 (데이터 받아오기 미완성) -->
 					<div class="form-group row">
 						<div class="col-lg-6">
 							<label>프로젝트 명</label>
@@ -155,10 +154,10 @@ hr {
 							<label>프로젝트 관리자</label>
 							<div class="row">
 								<div class="col-lg-6">
-									<div class="form-control form-control-view" style="background-color: #F3F6F9;">SW 개발 Lab</div>
+									<div class="form-control form-control-view" style="background-color: #F3F6F9;">${dto.team}</div>
 								</div>
 								<div class="col-lg-6">
-									<div class="form-control form-control-view" style="background-color: #F3F6F9;">홍길동</div>
+									<div class="form-control form-control-view" style="background-color: #F3F6F9;">${dto.employeename}</div>
 								</div>
 							</div>
 						</div>
@@ -167,10 +166,10 @@ hr {
 							<label>PMO</label>
 							<div class="row">
 								<div class="col-lg-6">
-									<div class="form-control form-control-view" style="background-color: #F3F6F9;">SW 개발 Lab</div>
+									<div class="form-control form-control-view" style="background-color: #F3F6F9;">${pmo.team}</div>
 								</div>
 								<div class="col-lg-6">
-									<div class="form-control form-control-view" style="background-color: #F3F6F9;">홍길동</div>
+									<div class="form-control form-control-view" style="background-color: #F3F6F9;">${pmo.employeename}</div>
 								</div>
 							</div>
 						</div>

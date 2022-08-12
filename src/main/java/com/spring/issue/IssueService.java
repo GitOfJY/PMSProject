@@ -17,4 +17,6 @@ public interface IssueService {
 
 	int add(IssueDTO dto);
 
+	int editok(IssueDTO dto);
+
 }

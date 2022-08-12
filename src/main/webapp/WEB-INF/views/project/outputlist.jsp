@@ -194,9 +194,11 @@ hr {
 											</a>
 
 											<!-- 새로운 파일 올리기 -->
+											<!-- 
 											<button onclick="location.href='/web/project/outputnewfile';" class="btn btn-secondary btn-sm" title="새로운 버전의 파일 등록">
 												<i class="fa fa-upload"></i>
 											</button>
+ 											-->
 										</td>
 									</tr>
 								</c:forEach>
