@@ -27,13 +27,12 @@
 	<!-- Container 컨테이너 -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">이슈리스트</h6>
+			<h6 class="m-0 font-weight-bold text-primary">내 이슈 관리</h6>
 		</div>
 
 		<!-- 검색 -->
 		<div class="card-body">
 			<div class="d-sm-flex align-items-center justify-content-between mb-4">
-
 				<form id="issueForm" class="form-inline">
 					<div class="form-group">
 						<b style="margin-right: 3px">긴급여부</b>
@@ -59,13 +58,12 @@
 				</a>
 			</div>
 
-
 			<!-- 리스트 출력 -->
 			<!-- 조회 리스트 div -->
-			<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-				<thead class="text-center">
+			<table class="table table-hover">
+				<!-- 헤더 -->
+				<thead class="text-center ">
 					<tr>
-						<!-- 헤더 -->
 						<th>긴급여부</th>
 						<th>이슈제목</th>
 						<th>프로젝트 명</th>

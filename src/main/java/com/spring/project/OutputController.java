@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.spring.issue.IssueDTO;
+import com.spring.myproject.IssueDTO;
 
 @Controller
 public class OutputController {

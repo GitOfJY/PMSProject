@@ -41,7 +41,7 @@
 </div>
     
     <!-- 개발 완료 후 지우기 -->
-    <!-- 
+
     <div style="text-align:center">
       <form method="POST" action="/web/loginok">
          <input type="hidden" name="email" value="admin@sysoft.com">
@@ -61,5 +61,5 @@
          <input type="submit" value="이한별" class="btn btn-success">
       </form>
    </div>
- 	-->
+
   
