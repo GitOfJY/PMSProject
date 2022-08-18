@@ -38,4 +38,7 @@ public class OutputDTO {
 	
 	// tblOType 테이블
 	private String type; // 산출물 종류
+	
+	private int num;// 글 번호
+	private String employeeseq;// 사원 번호
 }

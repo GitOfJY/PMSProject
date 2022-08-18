@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myoutput">
+
+	<select id="outputlist" parameterType="String" resultType="dto">
+		select
+			o.outputseq as outputseq,
+			o.version as version,
+			f.fileseq as fileseq,
+			f.title as title,
+			w.name as wname,
+			p.name as name,
+			ot.type as type,
+			o.regdate as regdate
+		from tblProject p
+			inner join tblStage s on p.projectSeq = s.projectSeq
+			inner join tblWork w on s.stageSeq = w.stageSeq
+			inner join tblOutput o on w.workSeq = o.workSeq
+			inner join tblFile f on o.outputSeq = f.outputSeq
+			inner join tblOType ot on o.oTypeSeq = ot.oTypeSeq
+		where o.oTypeSeq in (1, 2, 3, 4, 6) and teamseq in (select teamseq from tblTeam where employeeseq = #{employeeseq})
+	</select>
+
+	<!-- 담당 프로젝트명 -->
+	<select id="pnamelist" parameterType="String" resultType="dto">
+		select projectseq, name
+		from tblproject
+		where projectseq in (select projectseq from tblteam where employeeseq = #{employeeseq})
+	</select>
+
+	<!-- 산출물 종류 -->
+	<select id="otypelist" resultType="dto">
+		select * from tblOType where oTypeSeq in (1, 2, 3, 4, 6)
+	</select>
+	
+	<!-- 산출물 검색 -->
+	<select id="outputsearch" parameterType="dto" resultType="dto" >
+	select
+		o.outputseq as outputseq,
+		o.version as version,
+		f.fileseq as fileseq,
+		f.title as title,
+		w.name as wname,
+		p.name as name,
+		ot.type as type,
+		o.regdate as regdate
+	from tblProject p
+		inner join tblStage s on p.projectSeq = s.projectSeq
+		inner join tblWork w on s.stageSeq = w.stageSeq
+		inner join tblOutput o on w.workSeq = o.workSeq
+		inner join tblFile f on o.outputSeq = f.outputSeq
+		inner join tblOType ot on o.oTypeSeq = ot.oTypeSeq
+	where o.oTypeSeq in (1, 2, 3, 4, 6) and teamseq in (select teamseq from tblTeam where employeeSeq = #{employeeseq})
+		<if test='projectseq != ""'>
+			and s.projectseq = #{projectseq}
+		</if>
+		<if test='otypeseq != ""'>
+			and o.otypeseq = #{otypeseq}
+		</if>
+		<if test='title != ""'>
+			and f.title like '%'||#{title}||'%'
+		</if>
+	</select>
+
+</mapper>

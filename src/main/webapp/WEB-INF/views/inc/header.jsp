@@ -81,7 +81,7 @@
 				<a class="collapse-item" href="/web/myproject/myworklisto">작업 리스트</a> 
 				<a class="collapse-item" href="/web/myproject/myoutputlist">산출물관리</a>
 				<a class="collapse-item" href="">일정관리</a> 
-				<a class="collapse-item" href="/web/issue/issuelist">이슈리스트</a>
+				<a class="collapse-item" href="/web/issue/issuelist">이슈관리</a>
 			</div>
 		</div>
 	</li>

@@ -3,7 +3,7 @@ package com.spring.project;
 import java.util.List;
 import java.util.Map;
 
-import com.spring.issue.IssueDTO;
+import com.spring.myproject.IssueDTO;
 
 public interface OutputService {
 

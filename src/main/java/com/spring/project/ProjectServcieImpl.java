@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.issue.IssueDTO;
+import com.spring.myproject.IssueDTO;
 
 @Service
 public class ProjectServcieImpl implements ProjectService {

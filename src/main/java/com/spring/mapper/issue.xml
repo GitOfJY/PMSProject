@@ -54,7 +54,8 @@
 	</select>
 
 	<select id="issueproject" parameterType="String" resultType="issueprojectdto">
-		select projectseq AS projectseq, name AS name from tblproject
+		select projectseq, name
+		from tblproject
 		where projectseq in (select projectseq from tblteam where employeeSeq = #{employeeSeq})
 	</select>
 
@@ -71,27 +72,28 @@
 	<insert id="add" parameterType="issuedto">
 		insert all
 		into tblIssue (issueSeq, title, workSeq, workName, projectSeq, projectName, regDate, hopeDate, content, imergency, iType, iStateSeq, employeeseq)
-		values (issueSeq.nextval, #{title}, #{workseq},
-		(select name from tblwork where workSeq = #{workseq}), #{projectseq},
-		(select name from tblproject where projectSeq = #{projectseq}),
-		sysdate, #{hopedate}, #{content}, #{imergency}, #{itype}, #{istateseq}, #{employeeseq})
+			values (issueSeq.nextval, #{title}, #{workseq},
+			(select name from tblwork where workSeq = #{workseq}), #{projectseq},
+			(select name from tblproject where projectSeq = #{projectseq}),
+			sysdate, #{hopedate}, #{content}, #{imergency}, #{itype}, #{istateseq}, #{employeeseq})
 		into tblOutput(outputSeq, workSeq, oTypeSeq, regDate, version, issueSeq)
-		values(outputseq.nextVal, #{workseq}, 5, sysdate, 1, issueSeq.nextval)
+			values(outputseq.nextVal, #{workseq}, 5, sysdate, 1, issueSeq.nextval)
 		into tblFile(fileSeq, outputSeq, title)
-		values(fileSeq.nextVal, outputseq.nextVal, #{ftitle})
+			values(fileSeq.nextVal, outputseq.nextVal, #{ftitle})
 		select * from dual
 	</insert>
 	
 	<update id="edit" parameterType="issuedto">
-		update tblIssue 
+		update 
+			tblIssue 
 		set  
-		title= #{title},
-		imergency=#{imergency}, 
-		iType=#{itype},
-		workSeq=#{workseq},
-		workName=(select name from tblwork where workSeq = #{workseq}), 
-		content=#{content},
-		hopeDate=#{hopedate}
+			title= #{title},
+			imergency=#{imergency}, 
+			iType=#{itype},
+			workSeq=#{workseq},
+			workName=(select name from tblwork where workSeq = #{workseq}), 
+			content=#{content},
+			hopeDate=#{hopedate}
 		where issueSeq = #{issueseq}
 	</update>
 </mapper>

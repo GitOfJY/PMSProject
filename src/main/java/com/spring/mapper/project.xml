@@ -299,8 +299,8 @@
 		insert all
 		into tblOutput(outputSeq, workSeq, oTypeSeq, issueSeq, fileExplain, regDate, version)
 			values(outputseq.nextVal, #{workseq}, #{otypeseq}, null, #{fileexplain}, sysdate, 1)
-				into tblFile(fileSeq, outputSeq, title)
-					values(fileSeq.nextVal, outputseq.nextVal, #{title})
-						select * from dual
+		into tblFile(fileSeq, outputSeq, title)
+			values(fileSeq.nextVal, outputseq.nextVal, #{title})
+		select * from dual
 	</insert>
 </mapper>

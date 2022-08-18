@@ -4,8 +4,9 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.spring.issue.IssueDAO;
-import com.spring.issue.IssueDTO;
+
+import com.spring.myproject.IssueDAO;
+import com.spring.myproject.IssueDTO;
 
 @Service
 public class OutputServiceImpl implements OutputService {

@@ -39,7 +39,7 @@
 				</a>
 			</div>
 			<div class="table-responsive">
-				<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered table-hover" >
 					<thead class="text-center">
 						<tr>
 							<th>산출물 정보</th>

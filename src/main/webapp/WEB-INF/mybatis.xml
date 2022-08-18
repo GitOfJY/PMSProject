@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
-
 <configuration>
-
 	<typeAliases>
 		
 		<typeAlias type="com.spring.project.OutputDTO" alias="dto"/>
@@ -13,10 +10,10 @@
 		
 		<typeAlias type="com.spring.project.ProjectDTO" alias="pdto"/>
 		
-		<typeAlias type="com.spring.issue.IssueDTO" alias="issuedto" />
-		<typeAlias type="com.spring.issue.IssueProjectDTO" alias="issueprojectdto" />
-		<typeAlias type="com.spring.issue.IssueWorkDTO" alias="issueworkdto" />
-		<typeAlias type="com.spring.issue.IssueStateDTO" alias="issuestatedto" />
+		<typeAlias type="com.spring.myproject.IssueDTO" alias="issuedto" />
+		<typeAlias type="com.spring.myproject.IssueProjectDTO" alias="issueprojectdto" />
+		<typeAlias type="com.spring.myproject.IssueWorkDTO" alias="issueworkdto" />
+		<typeAlias type="com.spring.myproject.IssueStateDTO" alias="issuestatedto" />
 	
 	</typeAliases>
    
