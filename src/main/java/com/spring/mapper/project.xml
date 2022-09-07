@@ -233,6 +233,7 @@
 	<select id="seq" parameterType="String" resultType="dto">
 		select projectseq from tblproject where projectseq = #{projectseq}
 	</select>
+	
 	<!-- 6.1 산출물 검색기능 -->
 	<select id="resultlist" parameterType="HashMap" resultType="dto">
 		select p.name as name, p.projectSeq as projectseq, w.name as wname, o.*, f.*

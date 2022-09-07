@@ -16,5 +16,6 @@ public class LoginDTO {
 	private String pjsdate;
 	private String pjfdate;
 	private String pstate;
+	private String levelseq;
 
 }

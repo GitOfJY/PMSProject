@@ -1,5 +1,8 @@
 package com.spring.login;
 
+import java.io.PrintWriter;
+
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,9 +34,7 @@ public class LoginController {
 	@PostMapping(value="/loginok")
 	public void loginok(HttpSession session, HttpServletResponse resp, HttpServletRequest req, LoginDTO dto, Model model) {
 		
-		//System.out.println("전달된 데이터 : " + dto);
 		LoginDTO result = service.login(dto);
-		//System.out.println("전달받은 데이터 : " + result);
 		
 		try {
 			
@@ -44,7 +45,12 @@ public class LoginController {
 			} else {
 				//로그인 실패
 				session.removeAttribute("result");
-				resp.sendRedirect("/web/login");
+				resp.setCharacterEncoding("UTF-8");
+				resp.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = resp.getWriter();
+				out.println("<script>alert('아이디 또는 비밀번호가 틀렸습니다.'); location.href='/web/login';</script>");
+				out.flush();
+				
 			}
 			
 		} catch (Exception e) {

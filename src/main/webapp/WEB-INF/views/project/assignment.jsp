@@ -89,7 +89,7 @@ hr {
 
 								<th scope="col">
 									<div>
-										<a href="#!">
+										<a href="/web/project/assignment?projectseq=${dto.projectseq}">
 											<span>배정현황</span>
 										</a>
 									</div>
@@ -127,9 +127,8 @@ hr {
 					<h4 class="kt-portlet__head-title">프로젝트 배정현황</h4>
 				</div>
 				<hr>
-				<!-- <div class="d-sm-flex align-items-center justify-content-between mb-4"></div> -->
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+					<table class="table table-bordered table-hover" >
 						<thead class="text-center">
 							<tr>
 								<th></th>
@@ -139,7 +138,7 @@ hr {
 						<tbody>
 							<c:forEach items="${assignment}" var="dto">
 								<tr>
-									<td>${dto.ename}</td>
+									<td style="text-align: center;">${dto.ename}</td>
 									<td>${dto.wname}</td>
 								</tr>
 							</c:forEach>
