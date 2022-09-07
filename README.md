@@ -1,18 +1,18 @@
 #  PMSProject
 
-## 프로젝트 내용
+### 프로젝트 내용
 ```
 Spring Framework를 이용한 PMS System입니다. 
 PMS 서비스는 바쁜 프로젝트 일정과 범위를 효율적으로 프로젝트 관리를 할 수 있는 협업 도구입니다. 
 재택 근무의 증가로 비대면 업무 시스템이 중요해짐에따라 주제를 선정하였고 특히 개발 부서에 특화되도록 기능을 구현했습니다.
 ```
 
-## 개발 기간
+### 개발 기간
 ```
 2022.07.26 ~ 2022.09.07
 ```
 
-## 개발환경  
+### 개발환경  
 ```
 Server : Apache Tomcat 
 Database : Oracle
@@ -24,10 +24,10 @@ Configuration Management : Github, Sourcetree
 Design tool : Bootstrap
 ```
 
-## ERD
+### ERD
 ![ERD](https://user-images.githubusercontent.com/97590398/184394968-7831821d-dd34-421f-93a8-266f6b821fa7.png)
 
-##  PMSProject 구성원 : 마지연, 차수연
+###  PMSProject 구성원 : 마지연, 차수연
 ```
 - 마지연 
   - 로그인 기능
@@ -41,7 +41,7 @@ Design tool : Bootstrap
   - 이슈관리 기능
 ```
 
-## TroublShooting
+### TroublShooting
 ```
 - 마지연 : 
 로그인 기능은 session을 이용했지만 당시 출력의 용이성만을 고려해 너무 많은 값을 저장했습니다. 
