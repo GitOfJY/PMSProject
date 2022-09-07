@@ -1,16 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <div class="container">
-	<div class="text-center mt-5 ">
-		<h1>산출물 등록</h1>
-	</div>
+<br>
 	<div class="row">
-		<div class="col-lg-8 mx-auto">
-			<div class="card mt-2 mx-auto p-4 bg-light">
-				<div class="card-body bg-light">
+		<div class="col-lg-7 mx-auto">
+			<div class="card">
+			 <div class="card-header bg-primary text-white">산출물 등록</div> 
+				<div class="card-body">
 					<div class="container">
-
-						<!-- <form id="contact-form" role="form"> -->
 						<form name ="fileForm" method="POST" action="/web/project/outputaddok" enctype="multipart/form-data">
 							<div class="controls">
 								<div class="row">

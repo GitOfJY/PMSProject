@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="calendar">
+ <select id="calendarList" parameterType="String" resultType="calendardto">
+ 	select * from tblschedule where employeeSeq = #{employeeseq}
+ </select>
+ 
+ <insert id="calendarAdd" parameterType="calendardto">
+	insert into 
+	    tblSchedule (scheduleSeq, startdate, enddate, sTitle, sMemo, employeeSeq)
+	values
+	    (scheduleSeq.nextval,
+	     TO_DATE(#{startdate}, 'yyyy-mm-dd hh24:mi:ss'),
+	     TO_DATE(#{enddate}, 'yyyy-mm-dd hh24:mi:ss'),
+	     #{stitle},
+	     #{smemo},
+	     #{employeeseq})
+	    <!-- (scheduleSeq.nextval, #{startdate}, #{enddate}, #{stitle}, #{smemo}, #{employeeseq}) -->
+	    
+ </insert>
+ 
+ <select id="calendarSeq" parameterType="String" resultType="calendardto">
+ 	select * from tblschedule where scheduleSeq = #{scheduleseq}
+ </select>
+ 
+ <update id="calendarEdit" parameterType="calendardto">
+ 	update tblschedule
+	set 
+		startdate=TO_DATE(#{startdate},'yyyy-mm-dd hh24:mi:ss'),
+	 	enddate=TO_DATE(#{enddate},'yyyy-mm-dd hh24:mi:ss'), 
+	 	sTitle=#{stitle}, 
+	 	sMemo=#{smemo}
+	where scheduleSeq=#{scheduleseq}
+ </update>
+ 
+ <delete id="calendarDel" parameterType="String">
+	 delete from tblSchedule where scheduleSeq=#{scheduleseq}
+ </delete>
+</mapper>

@@ -1,6 +1,5 @@
 package com.spring.dashboard;
 
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,8 +24,7 @@ public class DashboardController {
 		this.service = service;
 	}
 		
-	
-	
+
 	//대시보드 > 종합현황
 	@GetMapping(value="/dashboardall")
 	public String dashbaordall(Model model) {
@@ -150,5 +148,14 @@ public class DashboardController {
 		model.addAttribute("result", result);
 		return "dashboard.mypage";
 	}
+	
+	
+	//헤더
+	//@GetMapping(value="/header") > 서버주소
+	//public String header(HttpSession session, HttpServletResponse resp, HttpServletRequest req, Model model) {
+	//	String result = String.valueOf(session.getAttribute("result"));
+	//	model.addAttribute("result", result);
+	//	return "dashboard.mypage"; > 뷰주소
+	//}
 
 }

@@ -31,4 +31,25 @@
 
 </body>
 
+<script>
+$(function() {
+		
+	var role = "${sessionScope.result.role}";
+	var levelseq = "${sessionScope.result.levelseq}";
+		
+	if (levelseq == 1) {
+		$(".admin").show();
+	} else {
+		$(".admin").hide();
+	}
+		
+	if (role == "PL") {
+		 $(".adminProject").show();
+	} else {
+		 $(".adminProject").hide();
+	}
+		
+});
+</script>
+
 </html>

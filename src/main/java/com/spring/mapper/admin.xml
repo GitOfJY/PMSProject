@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="admin">
+
+	<select id="elist" resultType="admindto">
+		select 
+			e.employeeseq as "eemployeeseq",
+		    e.name as "ename",
+		    e.email as "eemail",
+		    p.position as "eposition",
+		    e.phone as "ephone",
+		    e.levelseq as "elevelseq"
+		from tblemployee e
+		    left outer join tblPosition p on p.positionseq = e.positionseq
+	</select>
+
+
+	<select id="plist" resultType="admindto">
+		select
+		    positionseq as pseq,
+		    position
+		from tblposition
+	</select>
+
+	
+	<insert id="adduser" parameterType="admindto">
+		insert into tblEmployee(employeeseq, name, email, pw, phone, positionseq, levelseq) 
+			values (employeeseq.nextVal, #{name}, #{email}||'@sysoft.com',  #{pw}, #{phone}, #{positionseq}, #{levelseq})
+	</insert>
+
+	
+	<select id="getuser" parameterType="String" resultType="admindto">
+		select
+			e.employeeseq as "employeeseq", 
+		    e.name as "name",
+		    e.email as "email",
+            e.positionseq as "positionseq",
+		    p.position as "position",
+		    e.phone as "phone",
+		    e.levelseq as "levelseq"
+		from tblemployee e
+		    left outer join tblPosition p on p.positionseq = e.positionseq
+            where employeeseq = #{employeeseq}
+	</select>
+
+	
+	<update id="edituser" parameterType="admindto">
+		update tblemployee set name = #{name}, email = #{email}, pw = #{pw}, phone = #{phone}, positionseq = #{positionseq}, levelseq = #{levelseq} where employeeseq = #{employeeseq}            
+	</update>
+
+	
+	<delete id="deluser" parameterType="String">
+		delete from tblemployee where employeeseq = #{employeeseq}
+	</delete>
+
+	
+	<select id="checkemail" parameterType="String" resultType="int">
+		select count(email) as cnt from (select substr(email, 1, instr(email, '@', 1)-1) as email from tblemployee) where email = #{email}
+	</select>
+
+	
+	<select id="adminplist" resultType="adminpdto">
+		select 
+		    p.projectseq as "projectseq",
+		    p.pcode as "projectcode",
+		    p.name as "projectname",
+		    pt.type as "projecttype",
+		    p.startdate as "projectstart",
+		    p.finishdate as "projectfinish"
+		from tblproject p inner join tblptype pt on p.ptypeseq = pt.ptypeseq
+	</select>
+	
+	
+	<select id="empllist" resultType="admindto">
+		select 
+		    e.employeeseq as "employeeseq",
+		    e.name as "name",
+		    p.position as "positionname"
+		from tblemployee e inner join tblposition p on e.positionseq = p.positionseq
+		where p.position in ('상무', '이사', '부장', '차장', '과장', '계장')
+		order by p.position
+	</select>
+	
+	
+	<select id="rndlist" resultType="admindto">
+		select 
+		    rndseq as "rndseq",
+		    state as "rndstate"
+		from tblrnd
+	</select>
+	
+	
+	<select id="ptypelist" resultType="admindto">
+		select 
+		    ptypeseq as "ptypeseq",
+		    type as "ptype"
+		from tblptype
+	</select>
+	
+	
+	<select id="rolelist" resultType="admindto">
+		select * from tblrole where roleseq > 1
+	</select>
+	
+	
+	<select id="teamlist" resultType="admindto">
+		select distinct(name) as teamname from tblteam where projectseq is null
+	</select>
+	
+	<select id="pstatelist" resultType="admindto">
+		select pstateseq, state as pstate from tblpstate
+	</select>
+	
+	
+	<insert id="addproject" parameterType="adminpdto">
+		insert into tblProject (projectseq, pcode, name, startdate, finishdate, pstateseq, ptypeseq, rndseq) 
+    		values (projectseq.nextVal, (select 'sysyst-'||substr(sysdate, 1, 2)||'-'||substr(sysdate, 4, 2) as pcode from dual), #{name}, #{startdate}, #{finishdate}, '1', #{ptypeseq}, #{rndseq})
+	</insert>
+	
+	
+	<insert id="updateteam" parameterType="adminpdto">
+		update tblteam set projectseq = (select max(projectseq) from tblproject) where name = #{team}
+	</insert>
+	
+	
+	<insert id="addteam" parameterType="adminpdto">
+		insert into tblTeam (teamseq, projectseq, employeeseq, roleseq, name) values (teamseq.nextVal, null, #{pl}, 1, #{team})
+	</insert>
+	
+	
+	<select id="checkteam" parameterType="String" resultType="int">
+		select count(name) as cnt from (select distinct name as name from tblteam) where name = #{team}
+	</select>
+	
+	
+	<select id="getproject" parameterType="String" resultType="adminpdto">
+		select 
+		    p.projectseq,
+		    p.name as projectname,
+		    p.startdate as startdate,
+		    p.finishdate as finishdate,
+		    ps.state as state,
+		    vt.name as teamname
+		from tblproject p 
+			left outer join vadminproject vt on p.projectseq = vt.projectseq
+			inner join tblpstate ps on ps.pstateseq = p.pstateseq
+            where p.projectseq = #{projectseq}
+	</select>
+	
+	
+	<update id="editteam" parameterType="adminpdto">
+		update tblteam set projectseq = #{projectseq} where name = #{teamname}
+	</update>
+	
+	<update id="editproject" parameterType="adminpdto">
+		update tblproject set name = #{name}, startdate = #{startdate}, finishdate = #{finishdate}, pstateseq = #{pstateseq}, ptypeseq = #{ptypeseq}, rndseq = #{rndseq} where projectseq = #{projectseq}
+	</update>
+	
+	<update id="editnull" parameterType="adminpdto">
+		update tblteam set projectseq = null where projectseq = #{projectseq}
+	</update>
+	
+	
+</mapper>

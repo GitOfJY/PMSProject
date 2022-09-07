@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminWork">
+
+	<select id="wlist" resultType="adminworkdto" parameterType="String">
+		select 
+			w.workseq as workseq,
+			w.stageseq as stageseq,
+			w.teamseq as teamseq,
+			w.name as workname,
+			w.startdate as worksdate,
+			w.finishdate as workfdate,
+			w.statenum as wstatenum,
+			ws.state as wstate,
+			t.employeeseq as employeeseq,
+			p.projectseq as project,
+			p.name as projectname
+		from tblwork w
+		    inner join tblwstate ws on w.wstateseq = ws.wstateseq
+		    inner join tblteam t on t.teamseq = w.teamseq
+		    inner join tblproject p on p.projectseq = t.projectseq
+		    where employeeseq = #{employeeseq}
+		    order by w.workseq
+	</select>
+	
+	<select id="wstatelist" resultType="adminworkdto">
+		select * from tblwstate
+	</select>
+	
+	<select id="worksearch" parameterType="HashMap" resultType="adminworkdto"> 
+		select 
+			w.workseq as workseq,
+			w.stageseq as stageseq,
+			w.teamseq as teamseq,
+			w.name as workname,
+			w.startdate as worksdate,
+			w.finishdate as workfdate,
+			w.statenum as wstatenum,
+			ws.state as wstate,
+			t.employeeseq as employeeseq,
+			p.projectseq as project,
+			p.name as projectname
+		from tblwork w
+		    inner join tblwstate ws on w.wstateseq = ws.wstateseq
+		    inner join tblteam t on t.teamseq = w.teamseq
+		    inner join tblproject p on p.projectseq = t.projectseq
+	    where ws.state = #{state} and t.employeeseq = #{employeeseq}
+	    order by w.workseq
+	</select>
+	
+	<select id="statelist" resultType="adminworkdto">
+		select state from tblwstate
+	</select>
+	
+	<select id="getstage" resultType="adminworkdto" parameterType="String">
+		select 
+			s.name as stagename,
+			s.stageseq as stageseq
+		from tblproject p
+		    inner join tblstage s on p.projectseq = s.projectseq
+		    inner join tblteam t on p.projectseq = t.projectseq
+    		where t.employeeseq = #{employeeseq}
+	</select>
+	
+	<insert id="emaddwork" parameterType="adminworkdto">
+		insert into tblwork(workseq, stageseq, teamseq, wstateseq, name, startdate, finishdate, statenum, memo) 
+			values (workseq.nextVal, #{stageseq}, (select teamseq from tblteam where employeeseq = #{employeeseq}), 4, #{workname}, #{worksdate}, #{workfdate}, 0, #{workmemo})           
+	</insert>
+	
+	<select id="getemseq" resultType="adminworkdto" parameterType="String">
+		select employeeseq from tblemployee where employeeseq = #{employeeseq}
+	</select>
+	
+	<select id="getwinfo" resultType="adminworkdto" parameterType="String">
+		select 
+		    w.name as workname,
+		    w.startdate as worksdate,
+		    w.finishdate as workfdate,
+		    w.memo as workmemo,
+		    ws.state as workstate,
+		    w.workseq as workseq,
+		    w.statenum as workstatenum
+		from tblwork w
+		    inner join tblwstate ws on w.wstateseq = ws.wstateseq
+		    where workseq = #{workseq}	
+	</select>
+	
+	<update id="editemworkok" parameterType="adminworkdto">
+		update tblwork 
+			set wstateseq = #{wstateseq}, startdate = #{worksdate}, finishdate = #{workfdate}, statenum = #{workstatenum}, memo = #{workmemo} 
+			where workseq = #{workseq}            
+	</update>
+	
+	<delete id="emdelwork" parameterType="String">
+		delete tblwork where workseq = #{workseq}
+	</delete>
+
+	
+</mapper>

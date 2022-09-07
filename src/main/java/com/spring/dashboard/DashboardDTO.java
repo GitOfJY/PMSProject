@@ -1,6 +1,4 @@
 package com.spring.dashboard;
-
-
 import lombok.Data;
 
 @Data

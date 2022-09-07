@@ -161,13 +161,20 @@ tr {
 								<td class="" role="gridcell" align=center>${dto.finishdate.substring(0,10)}</td>
 
 								<!-- 프로그래스 바 수정*-->
+								<!--
+									 1. data-value
+									 2. aria-valuenow
+									 3. style="width: %;"
+									
+								-->
 								<td class="" role="gridcell" align=center>
 									<div style="width: 100%; padding-left: 3px">
-										<div data-value="13" class="progress progress-sm progress-half-rounded m-md ligh" style="float: left; width: 70%;">
-											<div class="progress-bar progress-bar-primary rounded-3" role="progressbar" aria-valuenow="13" aria-valuemin="0" aria-valuemax="100" style="background-color: #32c5d2; width: 50%;"></div>
+										<div data-value="100" class="progress progress-sm progress-half-rounded m-md ligh" style="float: left; width: 70%;">
+											<div class="progress-bar progress-bar-primary rounded-3" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="background-color: #32c5d2; width: 100%;"></div>
 										</div>
-										<div style="float: left; text-align: right; color: #808080; font-size: 10px; margin-top: -3px; margin-left: 1px; width: 25%;">50%</div>
+										<div style="float: left; text-align: right; color: #808080; font-size: 10px; margin-top: -3px; margin-left: 1px; width: 25%;">100%</div>
 									</div>
+									
 									<div style="width: 100%; padding-left: 3px">
 										<div data-value="0" class="progress progress-sm progress-half-rounded m-md light" style="float: left; width: 70%;">
 											<div class="progress-bar progress-bar-primary rounded-3" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 13%;"></div>

@@ -181,7 +181,7 @@
 	    <div class="card-body">
         	<div class="table-responsive">
             	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                	<thead>
+                	<thead style="text-align: center;" class="" role="gridcell">
                	    	<tr>
 				          	<th>프로젝트</th>
 				           	<th>작업</th>
@@ -190,7 +190,7 @@
 				            <th>완료율</th>
 	                	</tr>
                     </thead>
-                    <tbody>
+                    <tbody style="text-align: center;" class="" role="gridcell">
                     	
 	                    <c:if test="${eachwlist eq '[]'}">
 	 					    <td colspan='5'>진행중인 work가 없습니다.</td>
@@ -225,7 +225,7 @@
 	    <div class="card-body">
         	<div class="table-responsive">
             	<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                	<thead>
+                	<thead style="text-align: center;" class="" role="gridcell">
                	    	<tr>
 				          	<th>프로젝트</th>
 				           	<th>작업</th>
@@ -233,7 +233,7 @@
 			                <th>등록일자</th>
 	                	</tr>
                     </thead>
-                    <tbody>
+                    <tbody style="text-align: center;" class="" role="gridcell">
                     	 
                     	 <c:if test="${eachoplist eq '[]'}">
 	 					    <td colspan='4'>산출물이 없습니다.</td>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="adminProject">
+	
+	<select id="projectlist" resultType="adminprodto" parameterType="String">
+		select 
+		    p.projectseq as projectseq,
+		    p.pcode as projectcode,
+		    p.name as projectname,
+		    p.startdate as projectsdate,
+		    p.finishdate as projectfdate,
+		    ps.state as projectstate,
+		    r.state as rndstate,
+		    t.name as teamname,
+		    e.employeeseq as employeeseq
+		from tblproject p 
+		    inner join tblteam t on p.projectseq = t.projectseq
+		    inner join tblemployee e on e.employeeseq = t.employeeseq
+		    inner join tblpstate ps on ps.pstateseq = p.pstateseq
+		    inner join tblrnd r on r.rndseq = p.rndseq
+		    where t.roleseq = '1' and e.employeeseq = #{employeeseq}
+	</select>
+	
+	<select id="getproject" parameterType="String" resultType="adminprodto">
+		select 
+		    p.projectseq,
+		    p.name as projectname,
+		    p.startdate as startdate,
+		    p.finishdate as finishdate,
+		    ps.state as state,
+		    vt.name as teamname
+		from tblproject p 
+			left outer join vadminproject vt on p.projectseq = vt.projectseq
+			inner join tblpstate ps on ps.pstateseq = p.pstateseq
+            where p.projectseq = #{projectseq}
+	</select>
+	
+	<select id="gettname" parameterType="String" resultType="adminprodto">
+		select 
+			distinct(name) as teamname, 
+			projectseq
+		from tblteam where name = #{tname}
+	</select>
+	
+	<select id="getstagename" parameterType="String" resultType="adminprodto">
+		select name as stagename from tblstage where stageseq = #{stageseq}
+	</select>
+	
+	<select id="getstageseq" parameterType="String" resultType="adminprodto">
+		select stageseq as stageseq from tblstage where stageseq = #{stageseq}
+	</select>
+	
+	<select id="getpseq" parameterType="String" resultType="adminprodto">
+		select distinct(projectseq) as projectseq from tblteam where name=#{tname}
+	</select>
+	
+	<select id="teamlist" resultType="adminprodto">
+		select distinct(name) as teamname from tblteam where projectseq is null
+	</select>
+	
+	<select id="pstatelist" resultType="adminprodto">
+		select pstateseq, state as pstate from tblpstate
+	</select>
+	
+	<select id="rndlist" resultType="adminprodto">
+		select 
+		    rndseq as "rndseq",
+		    state as "rndstate"
+		from tblrnd
+	</select>
+	
+	<select id="rolelist" resultType="adminprodto">
+		select 
+			roleseq,
+			role
+		from tblrole where roleseq > 1
+	</select>
+	
+	<select id="empllist" resultType="adminprodto">
+		select  
+		    e.employeeseq as employeeseq,
+		    e.name as employeename
+		from tblemployee e 
+		    left outer join tblteam t on e.employeeseq = t.employeeseq
+		    where t.name is null
+	</select>
+	
+	<select id="ptypelist" resultType="adminprodto">
+		select 
+		    ptypeseq as "ptypeseq",
+		    type as "ptype"
+		from tblptype
+	</select>
+	
+	<update id="editproject" parameterType="adminprodto">
+		update tblproject set name = #{name}, startdate = #{startdate}, finishdate = #{finishdate}, pstateseq = #{pstateseq}, ptypeseq = #{ptypeseq}, rndseq = #{rndseq} where projectseq = #{projectseq}
+	</update>
+		
+	<update id="pleditstage" parameterType="adminprodto">
+		update tblstage set name = #{stagename}, expectstart = #{stagesdate}, expectfinish = #{stagefdate} where stageseq = #{stageseq}
+	</update>
+	
+	<insert id="pladdteam" parameterType="adminprodto">
+		insert into tblteam(teamseq, projectseq, employeeseq, roleseq, name) 
+			values (teamseq.nextVal, #{projectseq}, #{addemseq}, #{setrseq}, #{teamname})
+	</insert>
+	
+	<insert id="pladdstage" parameterType="adminprodto">
+		insert into tblstage(stageseq, projectseq, name, expectstart, expectfinish) 
+			values (stageseq.nextVal, #{projectseq}, #{stagename}, #{stagesdate}, #{stagefdate})
+	</insert>
+	
+	<insert id="pladdwork" parameterType="adminprodto">
+		insert into tblwork(workseq, stageseq, teamseq, wstateseq, name, startdate, finishdate, statenum, memo) 
+			values (workseq.nextVal, #{stageseq}, (select teamseq from tblteam where employeeseq = #{selem}), '4', #{workname}, #{worksdate}, #{workfdate}, '0', null)
+	</insert>
+	
+	<delete id="pldelteam" parameterType="String">
+		delete from tblteam where employeeseq = #{employeeseq}
+	</delete>
+	
+	<delete id="pldeltem" parameterType="adminprodto">
+		delete from tblteam where employeeseq = #{employeeseq}
+	</delete>
+	
+	<delete id="pldelwork" parameterType="String">
+		delete tblwork where workseq = #{workseq}
+	</delete>
+	
+	<select id="pltlist" resultType="adminprodto" parameterType="String">
+		select 
+		   p.name as pname,
+		   t.name as tname,
+		   e.employeeseq as employeeseq
+		from tblproject p 
+		    inner join tblteam t on p.projectseq = t.projectseq
+		    inner join tblemployee e on e.employeeseq = t.employeeseq
+		    inner join tblpstate ps on ps.pstateseq = p.pstateseq
+		    inner join tblrnd r on r.rndseq = p.rndseq
+		    where t.roleseq = '1' and e.employeeseq = #{employeeseq}
+	</select>
+	
+	<select id="plteamlist" resultType="adminprodto" parameterType="String">
+		select 
+			e.employeeseq as employeeseq,
+			e.name as name,
+			t.name as teamname,
+			r.role as role
+		from tblteam t 
+		    inner join tblemployee e on t.employeeseq = e.employeeseq
+		    inner join tblrole r on r.roleseq = t.roleseq
+		    where t.name = #{tname}
+	</select>
+	
+	<select id="stagelist" resultType="adminprodto" parameterType="String">
+		select 
+			projectseq as projectseq,
+			stageseq as stageseq,
+			name as stagename,
+			expectstart as stagesdate,
+			expectfinish as stagefdate
+		from tblstage
+    		where projectseq = (select distinct(projectseq) as projectseq from tblteam where name=#{tname})
+	</select>
+	
+	<select id="sworkerlist" resultType="adminprodto" parameterType="String">
+		select
+		    s.name as stagename,
+		    w.stageseq as stageseq,
+		    e.name as employeename,
+		    t.projectseq as projectseq,
+		    t.name as teamname,
+		    e.employeeseq as employeeseq,
+            w.name as workname,
+            w.workseq as workseq,
+            w.statenum as statenum
+		from tblwork w
+		    inner join tblstage s on s.stageseq = w.stageseq
+		    inner join tblteam t on w.teamseq = t.teamseq
+		    inner join tblemployee e on t.employeeseq = e.employeeseq
+		    where s.stageseq = #{stageseq}
+	</select>
+	
+	<select id="editworkerlist" resultType="adminprodto" parameterType="String">
+		select
+			e.employeeseq as employeeseq,
+			t.name as teamname,
+            t.teamseq as teamseq,
+			e.name as employeename
+		from tblteam t 
+		    inner join tblemployee e on t.employeeseq = e.employeeseq 
+		    where t.name = #{tname}
+	</select>
+	
+	<update id="updatework" parameterType="adminprodto">
+		update tblwork set teamseq = (select t.teamseq from tblemployee e inner join tblteam t on e.employeeseq = t.employeeseq where e.employeeseq = #{selem}), name =  #{workname} where workseq = #{wseq}
+	</update>
+	
+</mapper>

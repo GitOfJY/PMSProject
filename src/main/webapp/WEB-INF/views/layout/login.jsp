@@ -15,13 +15,13 @@
     <meta name="author" content="">
 
     <title>Login</title>
-   <tiles:insertAttribute name="asset"/>
+    <tiles:insertAttribute name="asset"/>
    
 </head>
 
 <body class="bg-gradient-primary">
 
-	<tiles:insertAttribute name="content"></tiles:insertAttribute>
+	<tiles:insertAttribute name="content"/>
     <tiles:insertAttribute name="footer"/>
 
 </body>

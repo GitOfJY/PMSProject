@@ -16,7 +16,8 @@
 		    pj.name as "pname",
 		    pj.startdate as "pjsdate",
 		    pj.finishdate as "pjfdate",
-		    ps.state as "pstate"
+		    ps.state as "pstate",
+		    e.levelseq as "levelseq"
 		from tblemployee e
 		    left outer join tblPosition p on p.positionseq = e.positionseq
     		left outer join tblteam t on e.employeeseq = t.employeeseq

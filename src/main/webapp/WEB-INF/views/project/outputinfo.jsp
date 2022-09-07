@@ -14,15 +14,13 @@ function del(outputseq, projectseq) {
 }	 
 </script>
 <div class="container">
-	<div class="text-center mt-5 ">
-		<h1>산출물 정보</h1>
-	</div>
+	<br>
 	<div class="row">
 		<div class="col-lg-7 mx-auto">
-			<div class="card mt-2 mx-auto p-4 bg-light">
-				<div class="card-body bg-light">
+			<div class="card">
+				<div class="card-header bg-primary text-white">산출물 정보</div>
+				<div class="card-body">
 					<div class="container">
-
 						<form name="fileForm" method="POST" action="/web/project/outputedit">
 							<div class="controls">
 								<div class="row">
