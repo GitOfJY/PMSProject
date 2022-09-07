@@ -34,6 +34,7 @@ public class ProjectController {
 			dto.setStartdate(dto.getStartdate().substring(0, 10));
 			dto.setFinishdate(dto.getFinishdate().substring(0, 10));
 		}
+		
 		model.addAttribute("list", list);
 		model.addAttribute("statelist", statelist);
 		model.addAttribute("teamlist", teamlist);
@@ -55,10 +56,12 @@ public class ProjectController {
 		List<Map<String, String>> list = service.projectsearch(param);
 		List<ProjectDTO> statelist = service.statelist();
 		List<ProjectDTO> teamlist = service.teamlist();
+		List<ProjectDTO> works = service.works();
 		
 		model.addAttribute("list", list);
 		model.addAttribute("statelist", statelist);
 		model.addAttribute("teamlist", teamlist);
+		model.addAttribute("works", works);
 		
 		return "project.projectcenter";
 	}
