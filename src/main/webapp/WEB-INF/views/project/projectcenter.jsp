@@ -102,17 +102,7 @@ tr {
 							</div>
 						</div>
 					</form>
-
 				</div>
-				<!-- 관리자만 볼 수 있게 -->
-				<!-- 
-				<div class="col-md-2 kt-align-right">
-					<a href="/web/project/addproject" class="btn btn-primary btn-icon-split">
-						<span class="icon text-white-50"> <i class="fa fa-plus" aria-hidden="true"></i>
-						</span> <span class="text">프로젝트 등록</span>
-					</a>
-				</div>
-				 -->
 			</div>
 		</div>
 		<div class="table-responsive">
@@ -142,7 +132,7 @@ tr {
 				</c:if>
 				<c:if test="${fn:length(list) > 0}">
 					<tbody>
-						<c:forEach items="${list}" var="dto">
+						<c:forEach items="${list}" var="dto" varStatus="status">
 							<tr>
 								<td class="" role="gridcell" align=center>${dto.projectseq}</td>
 
@@ -160,13 +150,7 @@ tr {
 
 								<td class="" role="gridcell" align=center>${dto.finishdate.substring(0,10)}</td>
 
-								<!-- 프로그래스 바 수정*-->
-								<!--
-									 1. data-value
-									 2. aria-valuenow
-									 3. style="width: %;"
-									
-								-->
+								<!-- 프로그래스 바 -->
 								<td class="" role="gridcell" align=center>
 									<div style="width: 100%; padding-left: 3px">
 										<div data-value="100" class="progress progress-sm progress-half-rounded m-md ligh" style="float: left; width: 70%;">
@@ -174,14 +158,14 @@ tr {
 										</div>
 										<div style="float: left; text-align: right; color: #808080; font-size: 10px; margin-top: -3px; margin-left: 1px; width: 25%;">100%</div>
 									</div>
-									
 									<div style="width: 100%; padding-left: 3px">
-										<div data-value="0" class="progress progress-sm progress-half-rounded m-md light" style="float: left; width: 70%;">
-											<div class="progress-bar progress-bar-primary rounded-3" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 13%;"></div>
+										<div data-value="${works[status.index].count}" class="progress progress-sm progress-half-rounded m-md light" style="float: left; width: 70%;">
+											<div class="progress-bar progress-bar-primary rounded-3" role="progressbar" aria-valuenow="${works[status.index].count}" aria-valuemin="0" aria-valuemax="100" style="width: ${works[status.index].count}%;"></div>
 										</div>
-										<div style="float: left; text-align: right; color: #808080; font-size: 10px; margin-top: -3px; margin-left: 1px; width: 25%;">13%</div>
+										<div style="float: left; text-align: right; color: #808080; font-size: 10px; margin-top: -3px; margin-left: 1px; width: 25%;">${works[status.index].count}%</div>
 									</div>
 								</td>
+								
 
 								<!-- 산출물 -->
 								<td class="" role="gridcell" align=center>

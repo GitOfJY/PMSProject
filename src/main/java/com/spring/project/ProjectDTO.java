@@ -49,4 +49,7 @@ public class ProjectDTO {
 	
 	//사원 테이블
 	private String employeename;
+	
+	//실적 작업 개수
+	private String count;
 }

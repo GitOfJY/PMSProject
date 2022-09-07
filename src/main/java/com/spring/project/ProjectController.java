@@ -28,15 +28,16 @@ public class ProjectController {
 		List<ProjectDTO> list = service.list();
 		List<ProjectDTO> statelist = service.statelist();
 		List<ProjectDTO> teamlist = service.teamlist();
+		List<ProjectDTO> works = service.works();
 		
 		for (ProjectDTO dto : list) {
 			dto.setStartdate(dto.getStartdate().substring(0, 10));
 			dto.setFinishdate(dto.getFinishdate().substring(0, 10));
 		}
-		
 		model.addAttribute("list", list);
 		model.addAttribute("statelist", statelist);
 		model.addAttribute("teamlist", teamlist);
+		model.addAttribute("works", works);
 		
 		return "project.projectcenter";
 	}

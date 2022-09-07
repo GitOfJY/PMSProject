@@ -58,4 +58,9 @@ public class ProjectServcieImpl implements ProjectService {
 	public ProjectDTO pmo(String projectseq) {
 		return dao.pmo(projectseq);
 	}
+	
+	@Override
+	public List<ProjectDTO> works() {
+		return dao.works();
+	}
 }

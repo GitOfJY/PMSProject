@@ -23,4 +23,6 @@ public interface ProjectService {
 
 	ProjectDTO pmo(String projectseq);
 
+	List<ProjectDTO> works();
+
 }

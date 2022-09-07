@@ -60,6 +60,14 @@
 	    </if>
 	    order by p.projectseq
 	</select>
+	
+	<!-- 프로젝트 센터 실적 -->
+	<select id="works" resultType="pdto">
+	select a.projectseq, NVL(CEIL(TO_NUMBER( (endwork / allwork) * 100)), 0) as count
+	from vallworks a
+	left join vendworks e
+	on a.projectseq = e.projectseq
+	</select>
 
 	<!-- 모든 프로젝트 산출물 출력 -->
 	<select id="alist" resultType="dto">

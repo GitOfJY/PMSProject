@@ -60,4 +60,9 @@ public class ProjectDAOImpl implements ProjectDAO {
 		return template.selectOne("project.pmo", projectseq);
 	}
 	
+	@Override
+	public List<ProjectDTO> works() {
+		return template.selectList("project.works");
+	}
+	
 }
