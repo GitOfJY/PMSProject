@@ -129,6 +129,10 @@
 		delete tblwork where workseq = #{workseq}
 	</delete>
 	
+	<delete id="pldelstage" parameterType="String">
+		delete tblstage where stageseq = #{stageseq}
+	</delete>
+	
 	<select id="pltlist" resultType="adminprodto" parameterType="String">
 		select 
 		   p.name as pname,
@@ -197,5 +201,13 @@
 	<update id="updatework" parameterType="adminprodto">
 		update tblwork set teamseq = (select t.teamseq from tblemployee e inner join tblteam t on e.employeeseq = t.employeeseq where e.employeeseq = #{selem}), name =  #{workname} where workseq = #{wseq}
 	</update>
+	
+	<select id="getworknum" resultType="adminprodto" parameterType="String">
+		select count(*) as worknum from tblstage s inner join tblwork w on s.stageseq = w.stageseq where s.stageseq = #{stageseq}
+	</select>
+	
+	<select id="getwnum" resultType="String" parameterType="String">
+		select count(*) as worknum from tblstage s inner join tblwork w on s.stageseq = w.stageseq where s.stageseq = #{stageseq}
+	</select>
 	
 </mapper>
