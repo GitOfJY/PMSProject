@@ -43,7 +43,7 @@ Design tool : Bootstrap
 
 ###  PMSProject 화면
 #### 로그인 기능
-<img width="80%" src="{이미지 경로}"/>
+<img width="80%" src="https://user-images.githubusercontent.com/104612045/189080754-49884d5a-609a-4820-b18e-e75f196e0478.mp4"/>
 
 ### TroublShooting
 ```
