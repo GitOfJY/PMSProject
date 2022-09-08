@@ -5,6 +5,11 @@
 
 
 <!-- plstage.jsp -->
+<style>
+	.hideCol { display:none; }
+</style>
+
+
 	<div class="card shadow mb-4">
 		<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     		<h6 class="m-0 font-weight-bold text-primary">스테이지 관리</h6>
@@ -15,13 +20,15 @@
 		
 		<div class="card-body">
 			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered" id="stageTable" width="100%" cellspacing="0">
 					<thead style="text-align: center;" class="" role="gridcell">
 						<tr>
+							<th class="hideCol">스테이지 seq</th>
 				           	<th>스테이지 명</th>
 			                <th>시작일</th>
 			                <th>완료일</th>
-			                <th>수정/삭제</th>
+			                <th>수정</th>
+			                <th>삭제</th>
 	                	</tr>
 					</thead>
 					<tbody style="text-align: center;" class="" role="gridcell">
@@ -32,17 +39,21 @@
 					
 						<c:forEach items="${stagelist}" var="dto">
 						<tr>
+							<td class="hideCol">${dto.stageseq}</td>
 							<td>${dto.stagename}</td>
 							<td>${dto.stagesdate.substring(0,10)}</td>
 							<td>${dto.stagefdate.substring(0,10)}</td>
 							<td>
 								<form action="POST">
-								<button type="button" class="btn btn-info btn-circle btn-sm" onclick="location.href='/web/editplstage?stageseq=${dto.stageseq}';">
-									<i class="fas fa-info-circle"></i>
-								</button>
-								<button type="button" class="btn btn-danger btn-circle btn-sm" onclick="deluser();">
-                        			<i class="fas fa-trash"></i></button>
+									<button type="button" class="btn btn-info btn-circle btn-sm" onclick="location.href='/web/editplstage?stageseq=${dto.stageseq}';">
+										<i class="fas fa-info-circle"></i>
+									</button>
 								</form>
+							</td>
+							<td>
+								<button type="button" class="btn btn-danger btn-circle btn-sm" onclick="delstage();">
+	                        		<i class="fas fa-trash"></i>
+	                        	</button>
 							</td>
 						</tr>
 						</c:forEach>
@@ -100,6 +111,24 @@ function handleOnInput(el, maxlength) {
 	}
 }
 
-</script>	
+function delstage(){
+	   
+	let seqList = document.getElementById('stageTable');
+	   
+	for (let i = 1; i < seqList.rows.length; i++) { 
+		seqList.rows[i].cells[5].onclick = function () {
+	    	let stageseq = seqList.rows[i].cells[0].innerText;
+	        
+	    	var chk = confirm("정말 삭제하시겠습니까?");
+	    	
+	    	if (chk) {
+	        	$("#stageTable").append("<button type=\"button\" id=\"del_btn\" onclick=\"location.href=\'/web/pldelstage?stageseq="+stageseq+"\';\">");
+	            $("#stageTable").append("</button>");
+	            document.getElementById('del_btn').click();
+	        }
+	    	
+		}
+	}
+}
 
-
+</script>

@@ -54,7 +54,7 @@
 <div class="card shadow mb-4">
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     	<h6 class="m-0 font-weight-bold text-primary">해당 스테이지 (${not empty ndto.stagename ? ndto.stagename : "작업 없음"}) 작업 수정</h6>
-    	<button type="button" id="addwork" onclick="getStageSeq()" style="background-color:transparent; border:0; outline=0; color:#4e73df;" data-toggle="modal" data-target="#editModal">
+    	<button type="button" id="addwork" onclick="getStageSeq();" style="background-color:transparent; border:0; outline=0; color:#4e73df;" data-toggle="modal" data-target="#editModal">
   			<i class="fa-solid fa-plus"></i>
 		</button>
     </div>
@@ -94,7 +94,7 @@
 				</c:forEach>
 				
 				<c:if test="${empty sworkerlist}">
- 					<tr><td colspan='3'>등록된 작업이 없습니다.</td></tr>
+ 					<tr><td colspan='4'>등록된 작업이 없습니다.</td></tr>
 				</c:if>
 				
 			</table>							
