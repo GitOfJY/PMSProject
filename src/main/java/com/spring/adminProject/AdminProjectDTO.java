@@ -49,5 +49,5 @@ public class AdminProjectDTO {
 	private String workfdate;
 	private String statenum;
 		
-		
+	private String worknum;	
 }

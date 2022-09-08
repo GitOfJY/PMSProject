@@ -147,5 +147,14 @@ private AdminProjectDAO dao;
 		return dao.pldelwork(workseq);
 	}
 
+	@Override
+	public int pldelstage(String stageseq) {
+		return dao.pldelstage(stageseq);
+	}
+
+	@Override
+	public AdminProjectDTO getworknum(String stageseq) {
+		return dao.getworknum(stageseq);
+	}
 
 }

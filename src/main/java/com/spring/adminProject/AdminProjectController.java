@@ -147,12 +147,73 @@ public class AdminProjectController {
       
    }
    
+   @GetMapping(value = "/pldelstage")
+   public String pldelstage(Model model, String stageseq, HttpServletResponse resp, HttpServletRequest req){
+      
+	    AdminProjectDTO getworknum = service.getworknum(stageseq);
+	    int worknum = Integer.valueOf(getworknum.getWorknum());
+	  
+	    try {
+	    	
+	        if (worknum != 0) {
+	        	resp.setCharacterEncoding("UTF-8");
+		        resp.setContentType("text/html; charset=UTF-8");
+		        PrintWriter out = resp.getWriter();
+		        out.println("<script>alert('작업이 존재하는 스테이지는 삭제할 수 없습니다.'); history.go(-1); </script>");
+		        out.flush();
+	         } else {
+	        	resp.setCharacterEncoding("UTF-8");
+			    resp.setContentType("text/html; charset=UTF-8");
+			    PrintWriter out = resp.getWriter();
+			    out.println("<script>location.href='/web/pldelstageok?stageseq="+stageseq+"';</script>");
+			    out.flush();
+	         }
+	        
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+      
+      return "adminProject.pldelstage";
+
+   }
+   
+   @GetMapping(value = "/pldelstageok")
+   public String pldelstageok(Model model, String stageseq, HttpServletResponse resp, HttpServletRequest req){
+      
+	    int result = service.pldelstage(stageseq);
+	    
+	    try {
+	    	
+	    	if (result == 1) {
+                resp.setCharacterEncoding("UTF-8");
+                resp.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.println("<script>location.href='/web/plstage';</script>");
+                out.flush();
+             } else {
+                resp.setCharacterEncoding("UTF-8");
+                resp.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.println("<script>alert('오류'); location.href='/web/plstage';</script>");
+                out.flush();
+             }
+	        
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+ 	    
+      
+      return "adminProject.pldelstageok";
+
+   }
+   
    @PostMapping(value="/pladdstageok")
    public void pladdstageok(HttpSession session, HttpServletResponse resp, AdminProjectDTO dto, HttpServletRequest req) {
       
       int result = service.pladdstage(dto);
       
       try {
+    	  
          if (result == 1) {
             resp.setCharacterEncoding("UTF-8");
             resp.setContentType("text/html; charset=UTF-8");
@@ -166,6 +227,7 @@ public class AdminProjectController {
             out.println("<script>alert('오류'); location.href='/web/plstage';</script>");
             out.flush();
          }
+         
       } catch (Exception e) {
          e.printStackTrace();
       }

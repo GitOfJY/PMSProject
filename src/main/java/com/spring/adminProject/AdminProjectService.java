@@ -56,4 +56,8 @@ public interface AdminProjectService {
 
 	int pldelwork(String workseq);
 
+	int pldelstage(String stageseq);
+
+	AdminProjectDTO getworknum(String stageseq);
+
 }

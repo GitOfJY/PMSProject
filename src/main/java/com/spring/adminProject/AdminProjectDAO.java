@@ -55,5 +55,9 @@ public interface AdminProjectDAO {
 	int pladdwork(AdminProjectDTO dto);
 
 	int pldelwork(String workseq);
+
+	int pldelstage(String stageseq);
+
+	AdminProjectDTO getworknum(String stageseq);
 	
 }

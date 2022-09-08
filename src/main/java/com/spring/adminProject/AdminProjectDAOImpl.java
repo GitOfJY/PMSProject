@@ -148,5 +148,14 @@ public class AdminProjectDAOImpl implements AdminProjectDAO {
 		return template.delete("adminProject.pldelwork", workseq);
 	}
 
+	@Override
+	public int pldelstage(String stageseq) {
+		return template.delete("adminProject.pldelstage", stageseq);
+	}
+
+	@Override
+	public AdminProjectDTO getworknum(String stageseq) {
+		return template.selectOne("adminProject.getworknum", stageseq);
+	}
 	
 }
