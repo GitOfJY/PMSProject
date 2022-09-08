@@ -19,11 +19,11 @@
                                     
                                     
                             <form class="user" method="POST" action="/web/loginok">
-                            	<div class="form-group"> <%-- 로그인 아이디--%>
+                            	<div class="form-group"> 
                     	            <input type="text" class="form-control form-control-user" name="email" placeholder="Email Address" required>
                                 </div>
                                     
-                                <div class="form-group"> <%-- 로그인 비밀번호--%>
+                                <div class="form-group"> 
                                 	<input type="password" class="form-control form-control-user" name="pw" placeholder="Password" required>
                                 </div>
                                 <button class="btn btn-primary btn-user btn-block">
@@ -40,25 +40,3 @@
     </div>
 </div>
     
-<!-- 개발 완료 후 지우기 -->
-    <div style="text-align:center">
-      <form method="POST" action="/web/loginok">
-         <input type="hidden" name="email" value="admin@sysoft.com">
-         <input type="hidden" name="pw" value="admin12345">
-         <input type="submit" value="관리자(admin)" class="btn btn-success">
-      </form>
-      &nbsp;
-      <form method="POST" action="/web/loginok">
-         <input type="hidden" name="email" value="Aguistin@sysoft.com">
-         <input type="hidden" name="pw" value="Aguistin12345">
-         <input type="submit" value="신동민(사원)" class="btn btn-success">
-      </form>
-       &nbsp;
-      <form method="POST" action="/web/loginok">
-         <input type="hidden" name="email" value="Jedediah@sysoft.com">
-         <input type="hidden" name="pw" value="Jedediah12345">
-         <input type="submit" value="이한별" class="btn btn-success">
-      </form>
-   </div>    
-
-  
