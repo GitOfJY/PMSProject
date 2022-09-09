@@ -70,7 +70,6 @@ public class ProjectController {
 	//팀원 탭
 	@GetMapping(value = "/project/centerteam")
 	public String team(Model model, String projectseq) {
-		
 		List<ProjectDTO> team = service.team(projectseq);
 		model.addAttribute("team", team);
 		return "project.centerteam";

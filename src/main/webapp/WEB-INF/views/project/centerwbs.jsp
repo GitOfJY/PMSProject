@@ -75,11 +75,15 @@
 						</tr>
 					</table>
 				</div>
+				
 				<div class="kt-portlet__head-label" style="margin-left: 30px;">
 					<h4 class="kt-portlet__head-title">프로젝트 WBS</h4>
 				</div>
+				
 				<hr>
+				
 				<div id="chart_div"></div>
+				
 			</div>
 		</div>
 	</div>

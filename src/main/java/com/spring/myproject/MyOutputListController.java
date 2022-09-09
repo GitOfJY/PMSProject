@@ -111,12 +111,9 @@ public class MyOutputListController {
 			temp += "{\"num\" : 0}";
 		}
 		
-		//System.out.println(temp);
 		writer.print(temp);
 		writer.close();
 		return;
 	}
-	
-	
 	
 }

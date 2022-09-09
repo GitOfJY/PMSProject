@@ -2,13 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project">
 	<!-- 프로젝트 센터 첫 페이지 출력 -->
-	<!--  
-	<select id="plist" resultType="pdto">
-		select pj.projectseq, pj.pcode, pj.name, pj.startdate, pj.finishdate, pt.type
-		from tblproject pj
-			inner join tblptype pt on pt.ptypeseq = pj.ptypeseq
-	</select>
-	-->
 	<select id="plist" resultType="pdto">
 	select 
     p.name as name, p.pcode as pcode, pt.type as type, p.startdate as startdate, p.finishdate as finishdate,
@@ -30,7 +23,6 @@
 	<select id="teamlist" resultType="pdto">
 		select distinct name as team from tblteam order by team
 	</select>
-	
 	
 	<!-- 프로젝트 센터 진행상태 리스트  -->
 	<select id="statelist" resultType="pdto">
@@ -96,17 +88,8 @@
 		order by o.regdate desc, w.name asc
 	</select>
 
-
 	<!-- 프로젝트 탭 -->
 	<!-- 1. 요약정보 출력 -->
-<!-- 	<select id="get" parameterType="String" resultType="pdto">
-		select pj.projectseq as projectseq, pj.name as name, pj.pcode as pcode, pt.type as type, rnd.state as state
-		from tblproject pj
-			inner join tblptype pt on pt.ptypeseq = pj.ptypeseq
-			inner join tblrnd rnd on pj.rndseq = rnd.rndseq
-		where projectseq = #{projectseq}
-	</select> -->
-
 	<select id="get" parameterType="String" resultType="pdto">
 	select 
     p.name as name, p.pcode as pcode, pt.type as type, p.startdate as startdate, p.finishdate as finishdate,
@@ -141,22 +124,21 @@
 	
 	<!-- 2. 팀원 출력 -->
 	<select id="team" parameterType="String" resultType="dto">
-		select p.projectSeq as projectseq, e.name as ename, po.position as position
+	select p.projectSeq as projectseq, e.name as ename, t.name as tname, po.position as position, e.email as email
 		from tblProject p
-			inner join tblTeam t on p.projectSeq = t.projectSeq
+		inner join tblTeam t on p.projectSeq = t.projectSeq
 			inner join tblEmployee e on t.employeeSeq = e.employeeSeq
 			inner join tblPosition po on e.positionSeq = po.positionSeq
-		where p.projectSeq = #{projectseq}
-		order by decode(position,
-								'상무', 1,
-								'이사', 2,
-								'부장', 3,
-								'차장', 4,
-								'과장', 5,
-								'계장', 6,
-								'대리', 7,
-								'주임', 8,
-								'사원', 9)
+		where p.projectSeq = 1
+		order by decode(position, 	'상무', 1,
+									'이사', 2,
+									'부장', 3,
+									'차장', 4,
+									'과장', 5,
+									'계장', 6,
+									'대리', 7,
+									'주임', 8,
+									'사원', 9)
 	</select>
 	<!-- 3. WBS 출력 -->
 	<select id="wbs" parameterType="String" resultType="pdto">
@@ -256,7 +238,6 @@
 		</if>
 		order by o.regdate desc, w.name asc
 	</select>
-
 	
 	<!-- 7. 비용 출력 -->
 	<select id="getcost" parameterType="String" resultType="pdto">
@@ -269,15 +250,16 @@
 		where p.projectseq = #{projectseq}
 	</select>
 
-
 	<select id="projectlist" resultType="dto">
 		select name, projectSeq from tblProject
 	</select>
-	<select id="worklist" resultType="dto">
+	
+	<select id="worklist"  parameterType="String" resultType="dto">
 		select p.projectSeq as projectSeq , p.name as name, w.name as wname, w.workseq as wworkseq
 		from tblProject p
 			inner join tblStage s on p.projectSeq = s.projectSeq
 			inner join tblWork w on s.stageSeq = w.stageSeq
+		  	where p.projectSeq = #{projectseq}	
 	</select>
 
 	<select id="info" parameterType="String" resultType="dto">

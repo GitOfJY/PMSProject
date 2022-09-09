@@ -4,6 +4,7 @@
 
 	<select id="outputlist" parameterType="String" resultType="dto">
 		select
+			p.projectSeq as projectseq,
 			o.outputseq as outputseq,
 			o.version as version,
 			f.fileseq as fileseq,

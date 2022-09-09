@@ -1,20 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		var form = document.getElementById("projectForm");
-
-		$("#search").click(function() {
-			form.action = "/web/project/projectsearch";
-			form.method = "GET";
-			form.submit();
-		});
-
-	});
-</script>
 <style>
 table {
 	border: 1px solid #E0E0E0;
@@ -42,7 +28,6 @@ tr {
 	margin-bottom: 15px;
 	margin-left: 20px;
 	margin-right: 20px;
-	min-height: 570px;
 	box-shadow: 0px 0px 13px 0px rgb(82 63 105/ 5%);
 }
 
@@ -69,7 +54,6 @@ tr {
 		<div class="col-lg-12 col-md-9 col-sm-12 col-xs-12 search-section">
 			<div class="row search-form">
 				<div class="col-md-10">
-
 					<form id="projectForm">
 						<div class="row align-items-center">
 							<div class="col-md-3 kt-margin-b-20-tablet-and-mobile">
@@ -104,7 +88,8 @@ tr {
 					</form>
 				</div>
 			</div>
-		</div>
+		</div> <!-- 검색 끝 -->
+		
 		<div class="table-responsive">
 			<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
 				<colgroup>
@@ -169,14 +154,14 @@ tr {
 
 								<!-- 산출물 -->
 								<td class="" role="gridcell" align=center>
-									<a href="/web/project/outputlist?projectseq=${dto.projectseq}">
+									<a href="/web/project/outputlist?projectseq=${dto.projectseq}" target="_blank">
 										<span class="kt-badge kt-badge--unified-danger kt-badge--lg kt-badge--bold"> ${not empty dto.outputcnt ? dto.outputcnt : "0"} </span>
 									</a>
 								</td>
 
 								<!-- 이슈 -->
 								<td class="" role="gridcell" align=center>
-									<a href="/web/project/issue?projectseq=${dto.projectseq}">
+									<a href="/web/project/issue?projectseq=${dto.projectseq}" target="_blank">
 										<span class="kt-badge kt-badge--unified-danger kt-badge--lg kt-badge--bold" style="color: red;"> ${not empty dto.issuecnt ? dto.issuecnt : "0"} </span>
 									</a>
 								</td>
@@ -188,3 +173,17 @@ tr {
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		
+		var form = document.getElementById("projectForm");
+
+		$("#search").click(function() {
+			form.action = "/web/project/projectsearch";
+			form.method = "GET";
+			form.submit();
+		});
+
+	});
+</script>

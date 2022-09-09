@@ -3,6 +3,8 @@ package com.spring.project;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -59,29 +61,58 @@ public class OutputController {
 
 	// 산출물 상세정보페이지
 	@GetMapping(value = "/project/outputinfo")
-	public String info(Model model, String fileseq) {
+	public String info(Model model, String fileseq, String projectseq) {
 
 		OutputDTO dto = service.info(fileseq);
 		List<OutputDTO> projectlist = service.projectlist();
-		List<OutputDTO> worklist = service.worklist();
-
+		List<OutputDTO> worklist = service.worklist(projectseq);
 		model.addAttribute("projectlist", projectlist);
 		model.addAttribute("worklist", worklist);
 		model.addAttribute("dto", dto);
+		
 		return "project.outputinfo";
 	}
 
 	// 산출물 등록페이지
 	@GetMapping(value = "/project/outputadd")
 	public String add(Model model) {
-
+		
 		List<OutputDTO> projectlist = service.projectlist();
-		List<OutputDTO> worklist = service.worklist();
-
 		model.addAttribute("projectlist", projectlist);
-		model.addAttribute("worklist", worklist);
-
+		
 		return "project.outputadd";
+	}
+	
+	// 산출물 프로젝트 > 작업 카테고리
+	@PostMapping("/project/outputaddsearch")
+	public void addsearch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String projectseq = req.getParameter("projectseq");
+		List<OutputDTO> worklist = service.worklist(projectseq);
+		
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("application/json");
+		
+		PrintWriter writer = resp.getWriter();
+		String temp = "";
+
+		if(worklist.size() > 0) {
+		
+			temp += "[";
+			
+			for(OutputDTO dto : worklist) {
+				temp += "{";
+				temp += String.format("\"wworkseq\": \"%s\"," , dto.getWworkseq());
+				temp += String.format("\"wname\": \"%s\"", dto.getWname());
+				temp += "},";
+			}
+			
+			temp = temp.substring(0, temp.length()-1); // 마지막 제거
+		
+			temp += "]";
+			
+		}
+		writer.print(temp);
+		writer.close();
 	}
 
 	// 산출물 등록하기 + 파일 업로드

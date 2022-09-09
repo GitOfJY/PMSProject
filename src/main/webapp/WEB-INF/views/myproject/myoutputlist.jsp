@@ -25,9 +25,9 @@
 					</c:forEach>
 				</select>
 				<input type="text" name="searchfile" id="title" placeholder="파일명으로 검색..." />
-				<input type="button" value="검색하기" class="btn btn-sm btn-primary" onclick="search();" />
-				<input type="button" value="전체목록보기" class="btn btn-sm btn-primary" onclick="location.href='/web/myproject/myoutputlist';" />
-				<input type="button" value="산출물 등록하기" class="btn btn-sm btn-primary" onclick="location.href='/web/project/outputadd';" />
+				<input type="button" value="검색" class="btn btn-sm btn-primary" onclick="search();" />
+				<input type="button" value="전체목록" class="btn btn-sm btn-primary" onclick="location.href='/web/myproject/myoutputlist';" />
+				<input type="button" value="산출물 등록" class="btn btn-sm btn-primary" onclick="location.href='/web/project/outputadd';" />
 			</div>
 
 			<!-- 리스트 출력 -->
@@ -48,7 +48,7 @@
 						<tr>
 							<td style="text-align: center;">${dto.num}</td>
 							<td>
-								<a href="/web/project/outputinfo?fileseq=${dto.fileseq}">${dto.title}</a>
+								<a href="/web/project/outputinfo?fileseq=${dto.fileseq}&projectseq=${dto.projectseq}">${dto.title}</a>
 							</td>
 							<td>${dto.wname}</td>
 							<td>${dto.name}</td>

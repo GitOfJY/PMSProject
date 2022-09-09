@@ -1,18 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-function del(outputseq, projectseq) {
-	
-	const title = document.getElementById('file').value;
-	
-	var chk = confirm("정말 삭제하시겠습니까?");
-	
-	if (chk) {
-		location.href='/web/project/outputdel?outputseq='+outputseq+'&projectseq='+projectseq+'&title='+title;
-	}
-}	 
-</script>
+<style>
+.required {
+	color: #d97474;
+}
+.container {
+	color: #666
+}
+</style>
 <div class="container">
 	<br>
 	<div class="row">
@@ -21,7 +16,7 @@ function del(outputseq, projectseq) {
 				<div class="card-header bg-primary text-white">산출물 정보</div>
 				<div class="card-body">
 					<div class="container">
-						<form name="fileForm" method="POST" action="/web/project/outputedit">
+						<form name="fileForm" method="POST" action="/web/project/outputedit" onsubmit="return fnSubmit()">
 							<div class="controls">
 								<div class="row">
 									<div class="col">
@@ -34,7 +29,7 @@ function del(outputseq, projectseq) {
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="form_project">프로젝트 *</label>
+											<label for="form_project">프로젝트 <span class="required">*</span></label>
 											<select id="form_project" name="projectseq" class="form-control" required="required">
 												<option value="" selected disabled>프로젝트를 선택하세요</option>
 												<c:forEach items="${projectlist}" var="pro">
@@ -46,7 +41,7 @@ function del(outputseq, projectseq) {
 
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="form_work">작업 *</label>
+											<label for="form_work">작업 <span class="required">*</span></label>
 											<select id="form_work" name="workseq" class="form-control" required="required">
 												<option value="" selected disabled>작업을 선택하세요</option>
 												<c:forEach items="${worklist}" var="work">
@@ -60,7 +55,7 @@ function del(outputseq, projectseq) {
 								<div class="row">
 									<div class="col-md-6">
 										<div class="form-group">
-											<label for="form_type">산출물 종류 *</label>
+											<label for="form_type">산출물 종류 <span class="required">*</span></label>
 											<select id="form_type" name="otypeseq" class="form-control" required="required">
 												<option value="" selected disabled>산출물 종류를 선택하세요</option>
 												<option value="1" <c:if test="${dto.type == '개발기획서'}">selected</c:if>>개발기획서</option>
@@ -98,3 +93,54 @@ function del(outputseq, projectseq) {
 		</div>
 	</div>
 </div>
+
+<script>
+function fnSubmit() {
+	if(confirm("정말 수정하시겠습니까?")) {
+		return true;
+	}
+	return false;
+};
+
+function del(outputseq, projectseq) {
+	
+	const title = document.getElementById('file').value;
+	
+	var chk = confirm("정말 삭제하시겠습니까?");
+	
+	if (chk) {
+		location.href='/web/project/outputdel?outputseq='+outputseq+'&projectseq='+projectseq+'&title='+title;
+	}
+};
+
+$(document).ready(function() {
+	$("select[name='projectseq']").change(function(){
+		var projectseq = $(this).val(); // 선택한 구분1
+		
+		$.ajax({
+			type: 'post',
+			url: 'outputaddsearch',
+			data: {projectseq : projectseq},
+			datatType: 'json',
+			success: function(data) {
+				console.log(data);
+				
+				let temp = "";
+				
+				$("select[name='workseq']").empty(); // 구분2 셀렉트박스 비우기
+				
+				temp += "<option value=selected disabled>작업을 선택하세요</option>";
+				
+				$(data).each(function(index, item){		
+					temp += "<option value='"+item.wworkseq+"'>"+item.wname+"</option>";
+				});
+				console.log(temp);
+				$("select[name='workseq']").append(temp); // 구분2 셀렉트박스에 넣기
+				
+			}, error:function(a, b, c){
+            	console.log(a, b, c);
+			}
+		});
+	});
+});
+</script>

@@ -29,10 +29,10 @@ public class OutputDAOImpl implements OutputDAO {
 	}
 
 	@Override
-	public List<OutputDTO> worklist() {
-		return template.selectList("project.worklist");
+	public List<OutputDTO> worklist(String projectseq) {
+		return template.selectList("project.worklist", projectseq);
 	}
-
+	
 	// 산출물 상세정보
 	@Override
 	public OutputDTO info(String fileseq) {
@@ -78,4 +78,5 @@ public class OutputDAOImpl implements OutputDAO {
 	public int add(OutputDTO dto) {
 		return template.insert("project.outputadd", dto);
 	}
+	
 }

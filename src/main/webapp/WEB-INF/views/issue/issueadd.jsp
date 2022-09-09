@@ -1,21 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		var form = document.getElementById("issueAdd");
-
-		$("#issueAddBtn").click(function() {
-			form.action = "/web/issue/issueaddok";
-			form.method = "POST";
-			form.submit();
-		});
-
-	});
-</script>
-
 <!-- Begin Page Content -->
 <div class="container">
 <br>
@@ -104,18 +89,17 @@
 								<select class="form-control" id="state" name="istateseq">
 									<option value="1">조치대기중</option>
 									<!-- 
-				  <c:forEach items="${stateList}" var="dto">
-				  		<option value="${dto.stateSeq}">${dto.state}</option>
-				  </c:forEach>
-				   -->
-								</select>
+									  <c:forEach items="${stateList}" var="dto">
+									  		<option value="${dto.stateSeq}">${dto.state}</option>
+									  </c:forEach>
+									   -->
+									</select>
 							</div>
 
 
 							<!-- 이슈등록정보 -->
 							<div class="btns" style="text-align: right;">
 								<input type="submit" value="저장" class="btn btn-primary">
-								<!-- <input id="issueAddBtn" type="button" value="저장" class="btn btn-primary"> -->
 								<input type="button" value="취소" class="btn btn-primary" onclick="history.back();">
 							</div>
 						</form>
@@ -125,3 +109,17 @@
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function() {
+
+		var form = document.getElementById("issueAdd");
+
+		$("#issueAddBtn").click(function() {
+			form.action = "/web/issue/issueaddok";
+			form.method = "POST";
+			form.submit();
+		});
+
+	});
+</script>

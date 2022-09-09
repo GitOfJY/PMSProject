@@ -6,7 +6,6 @@
 	margin-left: auto;
 	margin-right: auto;
 	table-layout: fixed;
-	box-shadow: 0px 0px 13px 0px rgb(82 63 105/ 5%);
 }
 
 .multi-portlet {
@@ -16,7 +15,6 @@
 	margin-left: 20px;
 	margin-right: 20px;
 	min-height: 570px;
-	box-shadow: 0px 0px 13px 0px rgb(82 63 105/ 5%);
 	text-decoration-line: none;
 	text-color: #EDF6F9;
 }
@@ -24,7 +22,7 @@
 .tap th {
 	border: 1px solid #E0E0E0;
 	text-align: center;
-	background-color: #FAFAFA;
+	background-color: #fff;
 	height: 50px;
 }
 
@@ -127,12 +125,25 @@ hr {
 				</div>
 				<hr>
 				<div class="table-responsive">
-					<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-						<c:forEach items="${team}" var="dto">
+				<table class="table table-bordered table-hover" >
+						<thead class="text-center">
 							<tr>
-								<td style="text-align: center;">(${dto.position}) ${dto.ename}</td>
+								<th>이름</th>
+								<th>부서</th>
+								<th>직급</th>
+								<th>이메일</th>
 							</tr>
-						</c:forEach>
+						</thead>
+						<tbody>
+							<c:forEach items="${team}" var="dto">
+								<tr style="text-align: center;">
+									<td>${dto.ename}</td>
+									<td>${dto.tname}</td>
+									<td>${dto.position}</td>
+									<td>${dto.email}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
 					</table>
 				</div>
 			</div>

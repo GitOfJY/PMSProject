@@ -100,11 +100,12 @@ public class IssueController {
 		}
 		
 		IssueDTO dto = new IssueDTO();
+		String projectseq = req.getParameter("projectseq");
 		dto.setIssueseq(req.getParameter("issueseq"));
 		dto.setTitle(req.getParameter("title"));
 		dto.setWorkseq(req.getParameter("workseq"));
 		dto.setWorkname(req.getParameter("workname"));
-		dto.setProjectseq(req.getParameter("projectseq"));
+		dto.setProjectseq(projectseq);
 		dto.setProjectname(req.getParameter("projectname"));
 		dto.setRegdate(req.getParameter("regdate"));
 		dto.setHopedate(req.getParameter("hopedate"));
@@ -118,7 +119,7 @@ public class IssueController {
 		
 		int result = service.add(dto);
 		
-		return "redirect:/issue/issuelist";
+		return "redirect:/project/issue?projectseq=" + projectseq;
 	}
 	
 	private String getFileName(String path, String filename) {
@@ -144,10 +145,18 @@ public class IssueController {
 
 	//이슈 수정페이지
 	@GetMapping(value = "/issue/issueedit")
-	public String edit(Model model, String issueseq) {
+	public String edit(Model model, String issueseq, HttpSession session) {
+		LoginDTO userdto = (LoginDTO) session.getAttribute("result");
+		String employeeseq = userdto.getEmployeeseq();
+		
+		List<IssueProjectDTO> plist = service.issueproject(employeeseq);
+		List<IssueWorkDTO> wlist = service.issuework(employeeseq);
+		
 		IssueDTO list = service.editlist(issueseq);
-		list.setHopedate(list.getHopedate().substring(0, 10));
+		
 		model.addAttribute("list", list);
+		model.addAttribute("projectList", plist);
+		model.addAttribute("workList", wlist);
 		return "issue.issueedit";
 	}
 	
@@ -156,11 +165,13 @@ public class IssueController {
 	public String editok(HttpServletRequest req, HttpSession session) {
 		
 		IssueDTO dto = new IssueDTO();
+		String projectseq = req.getParameter("projectseq");
+		
 		dto.setIssueseq(req.getParameter("issueseq"));
 		dto.setTitle(req.getParameter("title"));
 		dto.setWorkseq(req.getParameter("workseq"));
 		dto.setWorkname(req.getParameter("workname"));
-		dto.setProjectseq(req.getParameter("projectseq"));
+		dto.setProjectseq(projectseq);
 		dto.setProjectname(req.getParameter("projectname"));
 		dto.setRegdate(req.getParameter("regdate"));
 		dto.setHopedate(req.getParameter("hopedate"));
@@ -173,12 +184,11 @@ public class IssueController {
 		int result = service.editok(dto);
 
 		if (result == 1) {
-			return "redirect:/issue/issuelist";
+			return "redirect:/project/issue?projectseq=" + projectseq;
 		} else {
 			return "redirect:" + req.getHeader("Referer");
 		}
 		
 	}
-
 	
 }

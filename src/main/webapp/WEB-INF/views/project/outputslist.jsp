@@ -1,18 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		var form = document.getElementById("outputForm");
-
-		$("#search").click(function() {
-			form.action = "/web/project/outputssearch";
-			form.method = "GET";
-			form.submit();
-		});
-	});
-</script>
 <div class="container-fluid">
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
@@ -51,11 +38,11 @@
 						<c:forEach items="${alist}" var="dto">
 							<tr>
 								<td>
-									<a href="/web/project/outputinfo?fileseq=${dto.fileseq}" style="font-weight: bold;">${dto.title}</a>
+									<a href="/web/project/outputinfo?fileseq=${dto.fileseq}&projectseq=${dto.projectseq}" style="font-weight: bold;">${dto.title}</a>
 									<br /> ${dto.regdate}
 								</td>
 								<td>
-									<a href="/web/project/centerwbs?projectseq=${dto.projectseq}">${dto.name}</a>
+									<a href="/web/project/centerwbs?projectseq=${dto.projectseq}" target="_blank">${dto.name}</a>
 									<br /> ${dto.wname}
 								</td>
 								<td style="text-align: right;">
@@ -64,7 +51,7 @@
 										<i class="fa fa-sort-numeric-down"></i>버전
 									</button> -->
 									<!-- 파일 상세보기 -->
-									<button onclick="location.href='/web/project/outputinfo?fileseq=${dto.fileseq}';" class="btn btn-secondary btn-sm" title="파일 상세보기">
+									<button onclick="location.href='/web/project/outputinfo?fileseq=${dto.fileseq}&projectseq=${dto.projectseq}';" class="btn btn-secondary btn-sm" title="파일 상세보기">
 										<i class="fa fa-search"></i>
 									</button>
 									<!-- 파일 다운로드 -->
@@ -85,3 +72,15 @@
 	</div>
 </div>
 
+<script>
+	$(document).ready(function() {
+
+		var form = document.getElementById("outputForm");
+
+		$("#search").click(function() {
+			form.action = "/web/project/outputssearch";
+			form.method = "GET";
+			form.submit();
+		});
+	});
+</script>

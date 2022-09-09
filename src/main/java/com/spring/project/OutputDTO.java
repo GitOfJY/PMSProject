@@ -31,6 +31,7 @@ public class OutputDTO {
 	
 	// 사원 테이블
 	private String ename;
+	private String email;
 	
 	// 포지션 테이블
 	private String positionseq; // 포지션 번호
@@ -39,6 +40,7 @@ public class OutputDTO {
 	// tblOType 테이블
 	private String type; // 산출물 종류
 	
-	private int num;// 글 번호
-	private String employeeseq;// 사원 번호
+	private int num; // 글 번호
+	private String employeeseq; // 사원 번호
+	private String tname; // 팀이름
 }

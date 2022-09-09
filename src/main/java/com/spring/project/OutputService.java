@@ -13,8 +13,8 @@ public interface OutputService {
 
 	//산출물 상세정보 셀렉트 박스
 	List<OutputDTO> projectlist();
-	List<OutputDTO> worklist();
-
+	List<OutputDTO> worklist(String projectseq);
+	
 	OutputDTO info(String fileseq);
 
 	List<OutputDTO> list(String projectseq);
@@ -34,6 +34,8 @@ public interface OutputService {
 	List<Map<String, String>> issueResultList(Map<String, Object> param);
 
 	int add(OutputDTO dto);
+
+	
 
 	
 

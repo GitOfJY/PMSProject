@@ -7,7 +7,6 @@
 	margin-left: auto;
 	margin-right: auto;
 	table-layout: fixed;
-	box-shadow: 0px 0px 13px 0px rgb(82 63 105/ 5%);
 }
 
 .multi-portlet {
@@ -17,7 +16,6 @@
 	margin-left: 20px;
 	margin-right: 20px;
 	min-height: 570px;
-	box-shadow: 0px 0px 13px 0px rgb(82 63 105/ 5%);
 	text-decoration-line: none;
 	text-color: #EDF6F9;
 }
@@ -25,7 +23,7 @@
 .tap th {
 	border: 1px solid #E0E0E0;
 	text-align: center;
-	background-color: #FAFAFA;
+	background-color: #fff;
 	height: 50px;
 }
 
@@ -134,7 +132,6 @@ hr {
 						<table class="table table-bordered table-hover cost" id="dataTable" width="100%" cellspacing="0">
 							<thead class="text-center">
 								<tr>
-									<th>부서</th>
 									<th>비용항목</th>
 									<th>지출비용</th>
 									<th>지출일자</th>
@@ -144,10 +141,6 @@ hr {
 							<tbody>
 								<c:forEach items="${getcost}" var="dto">
 									<tr class="k-master-row" role="row">
-										<td style="text-align: center;" class="" role="gridcell">
-											<div class="forum-list-title">${dto.name}</div>
-										</td>
-
 										<td style="text-align: center;" class="" role="gridcell">
 											<div class="forum-list-title">${dto.costdiv}</div>
 										</td>

@@ -23,7 +23,26 @@
 	</select>
 
 	<select id="editlist" parameterType="String" resultType="issuedto"> 
-		select * from tblissue where issueseq = #{issueseq}
+		select DISTINCT i.issueSeq AS ISSUESEQ
+		, i.title AS TITLE
+		, i.workSeq AS WORKSEQ
+		, i.workName AS WORKNAME
+		, i.projectSeq AS PROJECTSEQ
+		, i.projectName AS PROJECTNAME
+		, TO_CHAR(i.regDate, 'YYYY-MM-DD') AS REGDATE
+		, TO_CHAR(i.hopeDate, 'YYYY-MM-DD') AS HOPEDATE
+		, TO_CHAR(i.manageDate, 'YYYY-MM-DD') AS MANAGEDATE
+		, i.content AS CONTENT
+		, i.imergency AS IMERGENCY
+		, i.iType AS ITYPE
+		, i.iStateSeq AS ISTATESEQ
+		, i.IRoleSeq AS IROLESEQ
+		, f.title as ftitle
+		from tblissue i
+			left outer join vversionoutput o on o.issueSeq = i.issueSeq
+			left outer join tblFile f on f.outputSeq = o.outputSeq
+		where i.issueseq = #{issueseq}
+
 	</select>
 
 	<select id="resultlist" parameterType="HashMap" resultType="issuedto">
@@ -67,8 +86,6 @@
 		where e.employeeseq = #{employeeSeq}
 	</select>
 	
-	<!-- <insert id="add" parameterType="issuedto"> insert into tblIssue (issueSeq, title, workSeq, workName, projectSeq, projectName, regDate, hopeDate, content, imergency, iType, iStateSeq, employeeseq) values (issueSeq.nextval, #{title}, #{workseq}, (select name from tblwork where workSeq = #{workseq}), #{projectseq}, (select name from tblproject where projectSeq = #{projectseq}), sysdate, #{hopedate}, #{content}, #{imergency}, #{itype}, #{istateseq}, #{employeeseq}) </insert> -->
-
 	<insert id="add" parameterType="issuedto">
 		insert all
 		into tblIssue (issueSeq, title, workSeq, workName, projectSeq, projectName, regDate, hopeDate, content, imergency, iType, iStateSeq, employeeseq)

@@ -5,7 +5,6 @@ table {
 	margin-left: auto;
 	margin-right: auto;
 	table-layout: fixed;
-	box-shadow: 0px 0px 13px 0px rgb(82 63 105/ 5%);
 }
 
 .multi-portlet {
@@ -15,7 +14,6 @@ table {
 	margin-left: 20px;
 	margin-right: 20px;
 	height: 1100px;
-	box-shadow: 0px 0px 13px 0px rgb(82 63 105/ 5%);
 	text-decoration-line: none;
 	text-color: #EDF6F9;
 }
@@ -23,7 +21,7 @@ table {
 th {
 	border: 1px solid #E0E0E0;
 	text-align: center;
-	background-color: #FAFAFA;
+	background-color: #fff;
 	height: 50px;
 }
 

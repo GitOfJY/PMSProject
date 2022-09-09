@@ -29,8 +29,7 @@
 	                                </div>
 	                            </div>
 	                            <div class="col-auto">
-	                            	<!-- 내작업리스트 주소로 바꾸기 -->
-	                            	<a href="/web/project/projectoutput">
+	                            	<a href="/web/emwork">
                         			<i class="fa-solid fa-child fa-2x"></i>
                         			</a>
                         		</div>
@@ -86,8 +85,7 @@
 	                                </div>
 	                            </div>
 	                            <div class="col-auto">
-	                            	<!-- 산출물 주소 확인 후 변경하기 -->
-	                            	<a href="/web/project/projectoutput">
+	                            	<a href="/web/myproject/myoutputlist">
                         			<i class="fa-regular fa-clipboard fa-2x"></i>
                         			</a>
                         		</div>

@@ -11,7 +11,7 @@ public interface OutputDAO {
 
 	List<OutputDTO> projectlist();
 
-	List<OutputDTO> worklist();
+	List<OutputDTO> worklist(String projectseq);
 
 	OutputDTO info(String fileseq);
 
@@ -30,5 +30,4 @@ public interface OutputDAO {
 	List<Map<String, String>> issueResultList(Map<String, Object> param);
 
 	int add(OutputDTO dto);
-
 }

@@ -33,8 +33,8 @@ public class OutputServiceImpl implements OutputService {
 	}
 
 	@Override
-	public List<OutputDTO> worklist() {
-		return dao.worklist();
+	public List<OutputDTO> worklist(String projectseq) {
+		return dao.worklist(projectseq);
 	}
 
 	@Override
@@ -86,4 +86,5 @@ public class OutputServiceImpl implements OutputService {
 	public int add(OutputDTO dto) {
 		return dao.add(dto);
 	}
+	
 }

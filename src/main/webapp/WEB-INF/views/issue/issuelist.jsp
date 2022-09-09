@@ -1,20 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		var form = document.getElementById("issueForm");
-
-		$("#search").click(function() {
-			form.action = "/web/issue/issuesearch";
-			form.method = "GET";
-			form.submit();
-		});
-
-	});
-</script>
 <style>
 .form-group_r {
 	clear: both;
@@ -93,7 +79,7 @@
 								<a href="/web/issue/issueedit?issueseq=${list.issueseq}">${list.title}</a>
 							</td>
 							<td>
-								<a href="/web/project/centerinfo?projectseq=${list.projectseq}">${list.projectname}</a>
+								<a href="/web/project/centerinfo?projectseq=${list.projectseq}" target="_blank">${list.projectname}</a>
 							</td>
 							<td>${list.itype}</td>
 							<td>${list.regdate}</td>
@@ -107,3 +93,16 @@
 	</div>
 	<!-- Container 컨테이너 끝-->
 </div>
+<script>
+	$(document).ready(function() {
+
+		var form = document.getElementById("issueForm");
+
+		$("#search").click(function() {
+			form.action = "/web/issue/issuesearch";
+			form.method = "GET";
+			form.submit();
+		});
+
+	});
+</script>
