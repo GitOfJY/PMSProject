@@ -1,5 +1,6 @@
 #  PMSProject
 
+
 ### 프로젝트 내용
 ```
 Spring Framework를 이용한 PMS System입니다. 
@@ -7,10 +8,12 @@ PMS 서비스는 바쁜 프로젝트 일정과 범위를 효율적으로 프로�
 재택 근무의 증가로 비대면 업무 시스템이 중요해짐에따라 주제를 선정하였고 특히 개발 부서에 특화되도록 기능을 구현했습니다.
 ```
 
+
 ### 개발 기간
 ```
 2022.07.26 ~ 2022.09.07
 ```
+
 
 ### 개발환경  
 ```
@@ -24,8 +27,10 @@ Configuration Management : Github, Sourcetree
 Design tool : Bootstrap
 ```
 
+
 ### ERD
 ![ERD](https://user-images.githubusercontent.com/97590398/184394968-7831821d-dd34-421f-93a8-266f6b821fa7.png)
+
 
 ###  PMSProject 구성원 : 마지연, 차수연
 ```
@@ -42,12 +47,45 @@ Design tool : Bootstrap
   - 이슈관리 기능
 ```
 
+
 ###  PMSProject 화면
 #### 로그인 기능
-<img width="80%" src="(https://user-images.githubusercontent.com/104612045/189580600-188e073a-2ecd-4ae5-b0aa-2e631e15a818.gif"/>  
+<img width="80%" src="https://user-images.githubusercontent.com/104612045/189580600-188e073a-2ecd-4ae5-b0aa-2e631e15a818.gif"/>  
 
 ```
 로그인 시 관리자, PL, 사원을 구분하여 왼쪽 메뉴를 다르게 출력합니다.
+```
+
+#### 대시보드 출력 기능
+<img width="80%" src="https://user-images.githubusercontent.com/104612045/189579418-95eae8fe-e151-4d0e-acc1-9416edb2638c.gif"/>  
+
+```
+종합현황, 팀별현황, 개인별현황으로 프로젝트 진행 상태를 출력합니다.
+각 출력 블럭에서는 링크를 통해 상세 페이지로 연결됩니다.
+```
+
+#### 관리자 기능
+<img width="80%" src="https://user-images.githubusercontent.com/104612045/189577628-b32e17fc-4d96-4f1b-b54f-6bb6b1a4b1f8.gif"/>  
+
+```
+관리자로 로그인 시, 사용자 관리 메뉴에서는 사원들의 정보를 수정, 삭제, 등록할 수 있습니다.
+프로젝트 관리 메뉴에서는 팀과 프로젝트를 등록하고 수정할 수 있습니다.
+```
+
+####  PL 기능
+<img width="80%" src="https://user-images.githubusercontent.com/104612045/189595344-290455a4-1cd5-4e02-976a-6687ec28e21a.gif"/>  
+
+```
+PL로 로그인 시, 본인에게 할당된 프로젝트를 수정하고 팀원을 추가할 수 있습니다.
+그 프로젝트의 스테이지를 수정, 삭제, 등록할 수 있는데 진행중인 작업이 있다면 삭제는 불가능합니다.
+마찬가지로 해당 스테이지의 작업도 수정, 삭제, 등록할 수 있습니다.
+```
+
+#### 내작업 기능
+<img width="80%" src="https://user-images.githubusercontent.com/104612045/189607773-84e25bb9-fc81-4edd-ab4c-f1d0386eca49.gif"/>  
+
+```
+본인에게 해당되는 프로젝트의 작업만 수정, 삭제, 등록할 수 있습니다.
 ```
 
 
