@@ -35,6 +35,7 @@ Design tool : Bootstrap
   - 내작업 관리 기능
   - 프로젝트 관리 기능
   - 관리자 관리 기능 
+  
 - 차수연 
   - 프로젝트 정보 출력 기능
   - 프로젝트 관리 기능
@@ -42,6 +43,8 @@ Design tool : Bootstrap
 ```
 
 ###  PMSProject 화면
+#### 로그인 기능
+<img width="80%" src="https://user-images.githubusercontent.com/104612045/189080754-49884d5a-609a-4820-b18e-e75f196e0478.mp4"/>
 #### 로그인 기능
 <img width="80%" src="https://user-images.githubusercontent.com/104612045/189080754-49884d5a-609a-4820-b18e-e75f196e0478.mp4"/>
 
