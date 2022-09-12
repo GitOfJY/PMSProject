@@ -44,9 +44,12 @@ Design tool : Bootstrap
 
 ###  PMSProject 화면
 #### 로그인 기능
-<img width="80%" src="https://user-images.githubusercontent.com/104612045/189080754-49884d5a-609a-4820-b18e-e75f196e0478.mp4"/>
-#### 로그인 기능
-<img width="80%" src="https://user-images.githubusercontent.com/104612045/189080754-49884d5a-609a-4820-b18e-e75f196e0478.mp4"/>
+<img width="80%" src="(https://user-images.githubusercontent.com/104612045/189580600-188e073a-2ecd-4ae5-b0aa-2e631e15a818.gif"/>  
+
+```
+로그인 시 관리자, PL, 사원을 구분하여 왼쪽 메뉴를 다르게 출력합니다.
+```
+
 
 ### TroublShooting
 ```
