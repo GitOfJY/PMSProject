@@ -54,7 +54,7 @@
 <div class="card shadow mb-4">
 	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
     	<h6 class="m-0 font-weight-bold text-primary">해당 스테이지 (${not empty ndto.stagename ? ndto.stagename : "작업 없음"}) 작업 수정</h6>
-    	<button type="button" id="addwork" onclick="getStageSeq();" style="background-color:transparent; border:0; outline=0; color:#4e73df;" data-toggle="modal" data-target="#editModal">
+    	<button type="button" id="addwork" onclick="getStageSeq();" style="background-color:transparent; border:0; outline=0; color:#4e73df;" data-toggle="modal" data-target="#editModal" data-backdrop="static" data-keyboard="false">
   			<i class="fa-solid fa-plus"></i>
 		</button>
     </div>
@@ -78,7 +78,7 @@
 					<td class="hideCol">${sw.workseq}</td>
 					<td class="hideCol">${sw.statenum}</td>
 					<td>
-						<button type="button" class="btn btn-success btn-circle btn-sm " onclick="getworkUser()" data-toggle="modal" data-target="#myModal">
+						<button type="button" class="btn btn-success btn-circle btn-sm " onclick="getworkUser()" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">
 						 	<i class="fas fa-info-circle"></i>
 						</button>
 					</td>
@@ -226,6 +226,7 @@ function getStageSeq() {
 	
     document.getElementById("addwork").onclick = function () {
     	let stageseq = seqList.rows[1].cells[2].innerText;
+    	alert(stageseq);
     	$("#addsseq").append("<input type=\"hidden\" name=\"stageseq\" class=\"delseq\" value=\""+stageseq+"\">");
  	}
     
@@ -256,7 +257,6 @@ function getworkUser() {
 
 $('#modal').modal("hide");
 $('#modal').modal("show");
-
 
 function handleOnInput(el, maxlength) {
 	if(el.value.length > maxlength)  {
