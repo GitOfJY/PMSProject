@@ -226,7 +226,6 @@ function getStageSeq() {
 	
     document.getElementById("addwork").onclick = function () {
     	let stageseq = seqList.rows[1].cells[2].innerText;
-    	alert(stageseq);
     	$("#addsseq").append("<input type=\"hidden\" name=\"stageseq\" class=\"delseq\" value=\""+stageseq+"\">");
  	}
     
